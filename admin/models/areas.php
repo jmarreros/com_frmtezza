@@ -38,45 +38,49 @@ class FrmTezzaModelAreas extends JModelList
 	// 	return JTable::getInstance($type, $prefix, $config);
 	// }
 
+// 	SELECT u.id, u.name FROM zd9ri_users u
+// INNER JOIN zd9ri_user_usergroup_map ugm ON ugm.user_id = u.id
+// INNER JOIN zd9ri_usergroups ug ON ug.id = ugm.group_id
+// WHERE u.block = 0;
+
 	protected function getListQuery()
 	{
-		// Initialize variables.
-		// $db    = JFactory::getDbo();
-		// $query = $db->getQuery(true);
+		// // Initialize variables.
+		$db    = JFactory::getDbo();
+		$query = $db->getQuery(true);
 
-		// // Create the base select statement.
-		// $query->select('*')
-  //               ->from($db->quoteName('#__helloworld'));
-		$query = '';
-		return $query;
+		// Create the base select statement.
+		$query->select(array('ug.title as title, ug.id'))
+				->from($db->quoteName('#__usergroups') .' as ug')
+				->where($db->quoteName('title') . " LIKE 'Area - %'")
+				->where($db->quoteName('title') . " NOT LIKE '%Jefe%'");
+		$query->order('title ASC');
+
+		// return $query;
+
+		return "hola";
 	}
 
 
-	public function getMsg()
-	{
-		// if (!is_array($this->messages))
-		// {
-		// 	$this->messages = array();
-		// }
+	// public function getData()
+	// {
+	// 	//$this->message = "Hola como estas?";
+	// 	$db    = JFactory::getDbo();
+	// 	$query = $db->getQuery(true);
 
-		// if (!isset($this->messages[$id]))
-		// {
-		// 	// Request the selected id
-		// 	$jinput = JFactory::getApplication()->input;
-		// 	$id     = $jinput->get('id', 1, 'INT');
+	// 	// Create the base select statement.
+	// 	$query->select('*')
+	// 			->from($db->quoteName('#__usergroups'))
+	// 			->where($db->quoteName('title') . " LIKE 'Area - %'")
+	// 			->where($db->quoteName('title') . " NOT LIKE '%Jefe%'");
 
-		// 	// Get a TableHelloWorld instance
-		// 	$table = $this->getTable();
+	// 	// $query->select($db->quoteName(array('user_id', 'profile_key', 'profile_value', 'ordering')))
+    // 	// 	  ->from($db->quoteName('#__user_profiles'));
 
-		// 	// Load the message
-		// 	$table->load($id);
+	// 	$db->setQuery($query);
+	// 	$results = $db->loadObjectList();
 
-		// 	// Assign the message
-		// 	$this->messages[$id] = $table->greeting;
-		// }
+	// 	return $results;
+	// }
 
-		//$this->message = "Hola como estas?";
-		
-		return "hola desde modelo";
-	}
 }

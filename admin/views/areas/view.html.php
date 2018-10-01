@@ -19,20 +19,12 @@ class FrmTezzaViewAreas extends JViewLegacy
 {
 
 	function display($tpl = null){
-		// $model = &$this->getModel('FrmTezza');
-		// $model = JModel::getInstance('Areas', 'FrmTezza');
-		// $model      = $this->getModel();
-		// $abc = $model->abc_list();
-		// var_dump($model);
-		$this->msg = $this->get('Msg');
-		// $this->msg = $model->getMsg();
-
-		// $this->msg = $this->get('Msg');
+		$this->items= $this->get('Items');
 
 		$this->addToolBar();
 		parent::display($tpl);
 	}
-	
+
 	protected function addToolBar()
 	{
 		JToolbarHelper::title(JText::_('Areas'));
