@@ -17,70 +17,73 @@ defined('_JEXEC') or die('Restricted access');
  */
 class FrmTezzaModelAreas extends JModelList
 {
-	/**
-	 * @var array messages
-	 */
-	protected $message;
 
-	/**
-	 * Method to get a table object, load it if necessary.
-	 *
-	 * @param   string  $type    The table name. Optional.
-	 * @param   string  $prefix  The class prefix. Optional.
-	 * @param   array   $config  Configuration array for model. Optional.
-	 *
-	 * @return  JTable  A JTable object
-	 *
-	 * @since   1.6
-	 */
-	// public function getTable($type = 'FrmTezzaAreas', $prefix = 'FrmTezzaTable', $config = array())
-	// {
-	// 	return JTable::getInstance($type, $prefix, $config);
-	// }
-
-// 	SELECT u.id, u.name FROM zd9ri_users u
-// INNER JOIN zd9ri_user_usergroup_map ugm ON ugm.user_id = u.id
-// INNER JOIN zd9ri_usergroups ug ON ug.id = ugm.group_id
-// WHERE u.block = 0;
-
+	// Requierde for Jmodellist class
 	protected function getListQuery()
 	{
-		// // Initialize variables.
+		return '';
+	}
+
+	// Get data from usergrups in combination whith user boss
+	public function getData()
+	{
+
+		$group_boss = $this->get_boss_group();
+		$group_current = 0;
+		$result = [];
 		$db    = JFactory::getDbo();
+
+		// Load all areas (like 'Area - %')
 		$query = $db->getQuery(true);
-
-		// Create the base select statement.
-		$query->select(array('ug.title as title, ug.id'))
-				->from($db->quoteName('#__usergroups') .' as ug')
+		$query->select(array('id', 'title'))
+				->from($db->quoteName('#__usergroups'))
 				->where($db->quoteName('title') . " LIKE 'Area - %'")
-				->where($db->quoteName('title') . " NOT LIKE '%Jefe%'");
-		$query->order('title ASC');
+				->where('id <> '. $group_boss );
 
-		// return $query;
+		$db->setQuery($query);
+		$data = $db->loadObjectList();
 
-		return "hola";
+		foreach ($data as $item){
+			// $item->id;
+			$result['area'][] = $item->id;
+
+// 			SELECT u.id, u.name FROM zd9ri_users u
+// INNER JOIN zd9ri_user_usergroup_map ugm ON ugm.user_id = u.id
+// WHERE u.block = 0
+// AND ugm.group_id = 23
+// AND ugm.user_id in (select user_id from zd9ri_user_usergroup_map WHERE group_id = 16);
+
+
+			// $query = $db->getQuery(true);
+			// $query->select(array('id', 'title'))
+			// 		->from($db->quoteName('#__usergroups'))
+			// 		->where($db->quoteName('title') . " LIKE 'Area - %'")
+			// 		->where($db->quoteName('title') . " NOT LIKE '%Jefe%'");
+
+		}
+
+
+		return $data;
+
 	}
 
 
-	// public function getData()
-	// {
-	// 	//$this->message = "Hola como estas?";
-	// 	$db    = JFactory::getDbo();
-	// 	$query = $db->getQuery(true);
+	//Get the boss group (like '%Jefe%')
+	private function get_boss_group(){
+		$db    = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id')
+				->from($db->quoteName('#__usergroups'))
+				->where($db->quoteName('title') . " LIKE '%Jefe%'");
 
-	// 	// Create the base select statement.
-	// 	$query->select('*')
-	// 			->from($db->quoteName('#__usergroups'))
-	// 			->where($db->quoteName('title') . " LIKE 'Area - %'")
-	// 			->where($db->quoteName('title') . " NOT LIKE '%Jefe%'");
+		$db->setQuery($query);
+		return $db->loadResult();
+	}
 
-	// 	// $query->select($db->quoteName(array('user_id', 'profile_key', 'profile_value', 'ordering')))
-    // 	// 	  ->from($db->quoteName('#__user_profiles'));
+	//Get user by two groups, one boss group and other group
+	private function get_user_by_groups( $group_boss, $group ){
 
-	// 	$db->setQuery($query);
-	// 	$results = $db->loadObjectList();
-
-	// 	return $results;
-	// }
+	}
 
 }
+

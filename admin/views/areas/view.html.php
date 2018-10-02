@@ -19,7 +19,8 @@ class FrmTezzaViewAreas extends JViewLegacy
 {
 
 	function display($tpl = null){
-		$this->items= $this->get('Items');
+
+		$this->items= $this->get('Data');
 
 		$this->addToolBar();
 		parent::display($tpl);
