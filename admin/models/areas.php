@@ -24,7 +24,13 @@ class FrmTezzaModelAreas extends JModelList
 		return '';
 	}
 
-	// Get data from usergrups in combination whith user boss
+
+	/**
+	 * Get data from usergrups in combination whith user boss
+	 *
+	 * @return  array  Array of An associative array object, area - users boss
+	 *
+	 */
 	public function getData()
 	{
 
@@ -45,15 +51,8 @@ class FrmTezzaModelAreas extends JModelList
 		$data = $db->loadObjectList();
 
 		foreach ($data as $item){
-
 			$bosses = $this->get_user_by_groups( $group_boss, $item->id);
-			$str = '';
-			foreach($bosses as $i => $boss){
-				if ( $i > 0) $str .= " <br> ";
-				$str .= $boss->name;
-			}
-
-			$result[] = array( 'area' => $item->title, 'boss' => $str );
+			$result[] = array( 'area' => $item->title, 'boss' => $bosses );
 		}
 
 		return $result;
@@ -61,7 +60,13 @@ class FrmTezzaModelAreas extends JModelList
 	}
 
 
-	//Get the boss group (like '%Jefe%')
+
+	/**
+	 * Get the boss group (like '%Jefe%')
+	 *
+	 * @return  int  id user that is boss
+	 *
+	 */
 	private function get_boss_group(){
 		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true);
@@ -73,7 +78,16 @@ class FrmTezzaModelAreas extends JModelList
 		return $db->loadResult();
 	}
 
-	//Get user by two groups, one boss group and other group
+
+	/**
+	 * Get user by two groups, one boss group and other group
+	 *
+	 * @param int $group_boss boss group
+	 * @param int $group user group
+	 *
+	 * @return  object  list of object user data
+	 *
+	 */
 	private function get_user_by_groups( $group_boss, $group ){
 		$db       = JFactory::getDbo();
 		$subQuery = $db->getQuery(true);
