@@ -8,7 +8,6 @@
  */
 
 defined('_JEXEC') or die;
-var_dump($this->items);
 ?>
 
 <form action="index.php?option=com_frmtezza&view=areas" method="post" id="adminForm" name="adminForm">
@@ -27,13 +26,13 @@ var_dump($this->items);
 		</tfoot>
 		<tbody>
 			<?php if (!empty($this->items)) : ?>
-				<?php foreach ($this->items as $i => $row) : ?>
+				<?php foreach ($this->items as $row) : ?>
 					<tr>
 						<td>
-							<?php echo $row->title; ?>
+							<?php echo $row['area'] ?>
 						</td>
 						<td>
-							<?php echo 'Jefe'; ?>
+							<?php echo $row['boss'] ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

@@ -18,7 +18,7 @@ defined('_JEXEC') or die('Restricted access');
 class FrmTezzaModelAreas extends JModelList
 {
 
-	// Requierde for Jmodellist class
+	// Requiered for Jmodellist class
 	protected function getListQuery()
 	{
 		return '';
@@ -38,32 +38,25 @@ class FrmTezzaModelAreas extends JModelList
 		$query->select(array('id', 'title'))
 				->from($db->quoteName('#__usergroups'))
 				->where($db->quoteName('title') . " LIKE 'Area - %'")
-				->where('id <> '. $group_boss );
+				->where('id <> '. $group_boss )
+				->order($db->quoteName('title') . ' ASC');
 
 		$db->setQuery($query);
 		$data = $db->loadObjectList();
 
 		foreach ($data as $item){
-			// $item->id;
-			$result['area'][] = $item->id;
 
-// 			SELECT u.id, u.name FROM zd9ri_users u
-// INNER JOIN zd9ri_user_usergroup_map ugm ON ugm.user_id = u.id
-// WHERE u.block = 0
-// AND ugm.group_id = 23
-// AND ugm.user_id in (select user_id from zd9ri_user_usergroup_map WHERE group_id = 16);
+			$bosses = $this->get_user_by_groups( $group_boss, $item->id);
+			$str = '';
+			foreach($bosses as $i => $boss){
+				if ( $i > 0) $str .= " <br> ";
+				$str .= $boss->name;
+			}
 
-
-			// $query = $db->getQuery(true);
-			// $query->select(array('id', 'title'))
-			// 		->from($db->quoteName('#__usergroups'))
-			// 		->where($db->quoteName('title') . " LIKE 'Area - %'")
-			// 		->where($db->quoteName('title') . " NOT LIKE '%Jefe%'");
-
+			$result[] = array( 'area' => $item->title, 'boss' => $str );
 		}
 
-
-		return $data;
+		return $result;
 
 	}
 
@@ -82,7 +75,27 @@ class FrmTezzaModelAreas extends JModelList
 
 	//Get user by two groups, one boss group and other group
 	private function get_user_by_groups( $group_boss, $group ){
+		$db       = JFactory::getDbo();
+		$subQuery = $db->getQuery(true);
+		$query    = $db->getQuery(true);
 
+		// Create the base subQuery, get all user belongs to an area
+		$subQuery->select('user_id')
+				->from($db->quoteName('#__user_usergroup_map'))
+				->where($db->quoteName('group_id') . ' = ' . $group);
+
+		// Main query, get user(s) that is area boss
+		$query->select(array('u.id', 'u.name'))
+				->from($db->quoteName('#__users','u'))
+				->join('INNER', $db->quoteName('#__user_usergroup_map','ugm').' ON '.$db->quoteName('ugm.user_id').'='. $db->quoteName('u.id'))
+				->where($db->quoteName('u.block') . ' = 0')
+				->where($db->quoteName('ugm.group_id') . ' = '.$group_boss)
+				->where($db->quoteName('ugm.user_id') . ' IN (' . $subQuery . ')');
+
+		// Set the query and load the result.
+		$db->setQuery($query);
+
+		return $db->loadObjectList();
 	}
 
 }
