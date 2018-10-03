@@ -21,14 +21,17 @@ class FrmTezzaViewSolicitudes extends JViewLegacy
 		$this->addToolBar();
 		parent::display($tpl);
 	}
-	
+
 	protected function addToolBar()
 	{
-		JToolbarHelper::title(JText::_('Solicitudes'));
-		JToolbarHelper::addNew('frmtezza.add');
-		JToolbarHelper::editList('frmtezza.edit');
-		JToolbarHelper::deleteList('', 'frmtezza.delete');
-		// JToolBarHelper::divider();
-		// JToolBarHelper::custom('frmtezza.areas', 'checkbox-partial', 'checkbox-partial', 'Areas', true);
+		JToolbarHelper::title(JText::_('Solicitudes'),'stack');
+		JToolbarHelper::addNew('solicitudes.add');
+		JToolbarHelper::editList('solicitudes.edit');
+		JToolbarHelper::deleteList('', 'solicitudes.delete');
+
+		// $bar = JToolBar::getInstance('toolbar');
+		// $bar->appendButton( 'Link', 'cube', 'Areas', 'index.php?option=com_frmtezza&view=areas' );
+
+		JToolBarHelper::custom('solicitudes.customButtonAreas', 'arrow-right', 'arrow-right', 'Areas', false);
 	}
 }

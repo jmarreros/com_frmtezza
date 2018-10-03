@@ -28,7 +28,9 @@ class FrmTezzaViewAreas extends JViewLegacy
 
 	protected function addToolBar()
 	{
-		JToolbarHelper::title(JText::_('Areas'));
+		JToolbarHelper::title(JText::_('Areas'), 'cube');
+		$bar = JToolBar::getInstance('toolbar');
+		$bar->appendButton( 'Link', 'arrow-right', 'Solicitudes', 'index.php?option=com_frmtezza' );
 	}
 
 }

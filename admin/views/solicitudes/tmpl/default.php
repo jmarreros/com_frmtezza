@@ -9,6 +9,11 @@
 
 defined('_JEXEC') or die;
 ?>
-<div>
-	<h1>Solicitudes</h1>
-</div>
+<form action="index.php?option=com_frmtezza&view=solicitudes" method="post" id="adminForm" name="adminForm">
+	<table class="table table-striped table-hover">
+
+	</table>
+	<input type="hidden" name="task" value=""/>
+	<input type="hidden" name="boxchecked" value="0"/>
+	<?php echo JHtml::_('form.token'); ?>
+</form>
