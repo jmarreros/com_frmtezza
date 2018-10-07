@@ -112,5 +112,23 @@ class FrmTezzaModelAreas extends JModelList
 		return $db->loadObjectList();
 	}
 
+
+	public function getAreaUser( $user = 0 ){
+		// $db       = JFactory::getDbo();
+		// $query    = $db->getQuery(true);
+		// $query->select('*')
+		// 	->
+		// $query->select('ugm.group_id')
+		// 	->from($db->quoteName('#__user_usergroup_map','ugm'))
+		// 	->join('INNER', $db->quoteName('#__usergroups','ug').' ON '.$db->quoteName('ugm.group_id').'='. $db->quoteName('ug.id').' AND '. $db->quoteName('ugm.user_id') .'='. $user)
+		// 	->where($db->quoteName('ug.title') . " LIKE '%Area -%'")
+		// 	->where($db->quoteName('ug.title') . " NOT LIKE '%JEFE -%'");
+
+		// $query->setLimit(1);
+
+		// $db->setQuery($query);
+		// return $db->loadResult();
+	}
+
 }
 
