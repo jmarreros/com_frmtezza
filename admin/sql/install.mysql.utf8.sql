@@ -1,6 +1,4 @@
-DROP VIEW IF EXISTS `#__frmtezza_v_user_area`;
-
-CREATE VIEW `#__tezza_v_user_area` AS  SELECT ugm.user_id, u.name, ugm.group_id, ug.title
+CREATE OR REPLACE VIEW `#__frmtezza_v_user_area` AS  SELECT ugm.user_id, u.name, ugm.group_id, ug.title
 FROM `#__users` AS `u`
 INNER JOIN `#__user_usergroup_map` AS `ugm` ON `u`.`id` = `ugm`.`user_id`
 INNER JOIN `#__usergroups` AS `ug` ON `ugm`.`group_id`=`ug`.`id` WHERE `ug`.`title` LIKE '%Area -%' AND `ug`.`title` NOT LIKE '%JEFE%';
@@ -20,6 +18,7 @@ CREATE TABLE IF NOT EXISTS `#__frmtezza_frm_user` (
     `dt_register` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     `dt_approval` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
     `dt_approval_rrhh` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
 
 
