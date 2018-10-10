@@ -1,25 +1,25 @@
--- DROP TABLE IF EXISTS `#__frmtezza_areas`;
+DROP VIEW IF EXISTS `#__frmtezza_v_user_area`;
 
--- CREATE TABLE `#__frmtezza_areas` (
--- 	`id`       INT(11)     NOT NULL AUTO_INCREMENT,
--- 	`area` VARCHAR(25) NOT NULL,
--- 	`published` tinyint(4) NOT NULL DEFAULT '1',
--- 	PRIMARY KEY (`id`)
--- )
--- 	ENGINE =MyISAM
--- 	AUTO_INCREMENT =0
--- 	DEFAULT CHARSET =utf8;
-
--- INSERT INTO `#__frmtezza_areas` (`area`) VALUES
--- ('Sistemas'),
--- ('Mantenimiento'),
--- ('Ventas');
-
-DROP VIEW IF EXISTS `#__v_user_area`;
-
-CREATE VIEW `#__v_user_area` AS  SELECT ugm.user_id, u.name, ugm.group_id, ug.title
+CREATE VIEW `#__tezza_v_user_area` AS  SELECT ugm.user_id, u.name, ugm.group_id, ug.title
 FROM `#__users` AS `u`
 INNER JOIN `#__user_usergroup_map` AS `ugm` ON `u`.`id` = `ugm`.`user_id`
 INNER JOIN `#__usergroups` AS `ug` ON `ugm`.`group_id`=`ug`.`id` WHERE `ug`.`title` LIKE '%Area -%' AND `ug`.`title` NOT LIKE '%JEFE%';
+
+
+CREATE TABLE IF NOT EXISTS `#__frmtezza_frm_user` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `id_record` int(11) NOT NULL DEFAULT '0',
+    `id_user` int(11) NOT NULL DEFAULT '0',
+    `id_area` int(11) NOT NULL DEFAULT '0',
+    `id_boss` int(11) NOT NULL DEFAULT '0',
+    `approval` tinyint(3),
+    `observation` varchar(400),
+    `id_boss_rrhh` int(11) NOT NULL DEFAULT '0',
+    `observation_rrhh` varchar(400),
+    `approval_rrhh` tinyint(3),
+    `dt_register` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `dt_approval` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+    `dt_approval_rrhh` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

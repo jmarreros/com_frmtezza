@@ -8,6 +8,7 @@
  */
 
 defined('_JEXEC') or die;
+
 ?>
 <p>
 Las áreas se crean en los <a href="index.php?option=com_users&view=groups">Grupos de Usuarios</a>.

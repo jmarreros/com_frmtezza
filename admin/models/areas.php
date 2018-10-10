@@ -62,7 +62,7 @@ class FrmTezzaModelAreas extends JModelList
 
 
 	/**
-	 * Get the boss group (like '%Jefe%')
+	 * Get the boss group (like '%Jefe%'), in #__user_gropus joomla table, should exists only one register
 	 *
 	 * @return  int  id user that is boss
 	 *
@@ -72,7 +72,7 @@ class FrmTezzaModelAreas extends JModelList
 		$query = $db->getQuery(true);
 		$query->select('id')
 				->from($db->quoteName('#__usergroups'))
-				->where($db->quoteName('title') . " LIKE '%Jefe%'");
+				->where($db->quoteName('title') . " LIKE '%JEFE%'");
 
 		$db->setQuery($query);
 		return $db->loadResult();
@@ -113,22 +113,20 @@ class FrmTezzaModelAreas extends JModelList
 	}
 
 
-	public function getAreaUser( $user = 0 ){
-		// $db       = JFactory::getDbo();
-		// $query    = $db->getQuery(true);
-		// $query->select('*')
-		// 	->
-		// $query->select('ugm.group_id')
-		// 	->from($db->quoteName('#__user_usergroup_map','ugm'))
-		// 	->join('INNER', $db->quoteName('#__usergroups','ug').' ON '.$db->quoteName('ugm.group_id').'='. $db->quoteName('ug.id').' AND '. $db->quoteName('ugm.user_id') .'='. $user)
-		// 	->where($db->quoteName('ug.title') . " LIKE '%Area -%'")
-		// 	->where($db->quoteName('ug.title') . " NOT LIKE '%JEFE -%'");
-
-		// $query->setLimit(1);
-
-		// $db->setQuery($query);
-		// return $db->loadResult();
-	}
-
 }
 
+
+
+
+	// public function getAreaUser( $user ){
+	// 	$db       = JFactory::getDbo();
+	// 	$query    = $db->getQuery(true);
+
+	// 	$query->select('group_id')
+	// 		->from($db->quoteName('#__v_user_area'))
+	// 		->where($db->quoteName('user_id') . ' = '.$user)
+	// 		->setLimit(1);
+
+	// 	$db->setQuery($query);
+	// 	return $db->loadResult();
+	// }
