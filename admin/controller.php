@@ -16,8 +16,11 @@ defined('_JEXEC') or die;
  */
 class FrmTezzaController extends JControllerLegacy
 {
-	protected $default_view = 'solicitudes';
-	
+	protected $default_view = 'forms';
+}
+
+
+
 	// /**
 	//  * Constructor.
 	//  *
@@ -62,4 +65,3 @@ class FrmTezzaController extends JControllerLegacy
 
 	// 	return $this;
 	// }
-}
