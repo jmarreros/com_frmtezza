@@ -25,19 +25,18 @@ class FrmTezzaModelForms extends JModelList
 	 */
 	protected function getListQuery()
 	{
+
+		$mainframe =JFactory::getApplication();
+
+		$search = $mainframe->getUserStateFromRequest( "tezza_search", 'tezza_search', '' );
+
 		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true);
 
 		$query->select('*')
-                ->from($db->quoteName('#__frmtezza_frm_user'));
+                ->from($db->quoteName('#__frmtezza_v_user_forms'));
 
 		return $query;
 	}
-
-	public function mensaje_model(){
-		return "hola como estas?";
-	}
-
-
 
 }

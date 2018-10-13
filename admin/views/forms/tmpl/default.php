@@ -8,9 +8,26 @@
  */
 
 defined('_JEXEC') or die;
-
 ?>
+
 <form action="index.php?option=com_frmtezza&view=forms" method="post" id="adminForm" name="adminForm">
+	<div class="row-fluid" style="text-align:right">
+
+		<div class="btn-wrapper input-append">
+			<input type="text" name="tezza_search" id="tezza_search" value="<?php echo $this->tezza_search; ?>" placeholder="Buscar" data-original-title="" title="">
+				<button type="submit" class="btn hasTooltip" title="" aria-label="Buscar" data-original-title="Buscar">
+				<span class="icon-search" aria-hidden="true"></span>
+			</button>
+		</div>
+
+		<select id="tezza_area" name="tezza_area" onchange="this.form.submit();">
+			<option value="" selected="selected">- Todas las Áreas -</option>
+			<option value="1">1</option>
+		</select>
+	</div>
+
+	<hr>
+
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
@@ -18,14 +35,20 @@ defined('_JEXEC') or die;
 				<th width="2%">
 					<?php echo JHtml::_('grid.checkall'); ?>
 				</th>
-				<th width="10%">
-					col
-				</th>
-				<th width="10%">
-					col
+				<th width="20%">
+					Formulario
 				</th>
 				<th width="20%">
-					col
+					Usuario
+				</th>
+				<th width="20%">
+					Area
+				</th>
+				<th width="10%">
+					Fecha
+				</th>
+				<th width="10%">
+					Aprobado
 				</th>
 			</tr>
 		</thead>
@@ -41,13 +64,19 @@ defined('_JEXEC') or die;
 							<?php echo JHtml::_('grid.id', $i, $row->id); ?>
 						</td>
 						<td>
-							<?php echo $row->id_user; ?>
+							<?php echo $row->title; ?>
 						</td>
 						<td>
-							<?php echo $row->id_area; ?>
+							<?php echo $row->name; ?>
+						</td>
+						<td>
+							<?php echo $row->area; ?>
+						</td>
+						<td>
+							<?php echo $row->dt_register; ?>
 						</td>
 						<td align="center">
-							<?php echo $row->id; ?>
+							<?php echo $row->approval; ?>
 						</td>
 					</tr>
 				<?php endforeach; ?>

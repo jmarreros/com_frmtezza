@@ -35,20 +35,10 @@ class FrmTezzaModelAreas extends JModelList
 	{
 
 		$group_boss = $this->get_boss_group();
-		$group_current = 0;
 		$result = [];
-		$db    = JFactory::getDbo();
 
-		// Load all areas (like 'Area - %')
-		$query = $db->getQuery(true);
-		$query->select(array('id', 'title'))
-				->from($db->quoteName('#__usergroups'))
-				->where($db->quoteName('title') . " LIKE 'Area - %'")
-				->where('id <> '. $group_boss )
-				->order($db->quoteName('title') . ' ASC');
-
-		$db->setQuery($query);
-		$data = $db->loadObjectList();
+		//Get all areas
+		$data = $this->get_all_areas($group_boss);
 
 		foreach ($data as $item){
 			$bosses = $this->get_user_by_groups( $group_boss, $item->id);
@@ -59,7 +49,29 @@ class FrmTezzaModelAreas extends JModelList
 
 	}
 
+	/**
+	 * Get the the all the areas (like 'Area - %') except area boss
+	 *
+	 * @return  object  List of areas
+	 *
+	 */
+	public function get_all_areas( $group_boss = 0 ){
 
+		if ( $group_boss == 0)  $group_boss = $this->get_boss_group();
+
+		$db    = JFactory::getDbo();
+		$query = $db->getQuery(true);
+
+		$query->select(array('id', 'title'))
+				->from($db->quoteName('#__usergroups'))
+				->where($db->quoteName('title') . " LIKE 'Area - %'")
+				->where('id <> '. $group_boss )
+				->order($db->quoteName('title') . ' ASC');
+
+		$db->setQuery($query);
+
+		return $db->loadObjectList();
+	}
 
 	/**
 	 * Get the boss group (like '%Jefe%'), in #__user_gropus joomla table, should exists only one register

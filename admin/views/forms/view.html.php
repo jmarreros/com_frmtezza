@@ -19,11 +19,21 @@ class FrmTezzaViewForms extends JViewLegacy
 
 	function display($tpl = null)
 	{
+		$mainframe =JFactory::getApplication();
+
+		$this->tezza_search = $mainframe->getUserStateFromRequest( "tezza_search", 'tezza_search', '' );
+
 		$this->addToolBar();
 
 		// Get data from the model
 		$this->items		= $this->get('Items');
 		$this->pagination	= $this->get('Pagination');
+
+		// Get data from area model
+
+		// $model_area = $this->getModel('areas');
+
+		// $this->areas = $model_area->get_all_areas();
 
 		parent::display($tpl);
 	}
@@ -32,9 +42,9 @@ class FrmTezzaViewForms extends JViewLegacy
 	protected function addToolBar()
 	{
 		JToolbarHelper::title(JText::_('Solicitudes'),'stack');
-		JToolbarHelper::addNew('forms.add');
-		JToolbarHelper::editList('forms.edit');
-		JToolbarHelper::deleteList('', 'forms.delete');
+		// JToolbarHelper::addNew('forms.add');
+		// JToolbarHelper::editList('forms.edit');
+		// JToolbarHelper::deleteList('', 'forms.delete');
 
 		JToolBarHelper::custom('forms.customButtonAreas', 'arrow-right', 'arrow-right', 'Areas', false);
 	}
