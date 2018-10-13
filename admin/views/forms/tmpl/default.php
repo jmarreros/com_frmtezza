@@ -14,15 +14,26 @@ defined('_JEXEC') or die;
 	<div class="row-fluid" style="text-align:right">
 
 		<div class="btn-wrapper input-append">
-			<input type="text" name="tezza_search" id="tezza_search" value="<?php echo $this->tezza_search; ?>" placeholder="Buscar" data-original-title="" title="">
+			<input type="text" name="tezza_search" id="tezza_search" value="<?php echo $this->tezza_search; ?>" placeholder="Buscar" minlength=3>
 				<button type="submit" class="btn hasTooltip" title="" aria-label="Buscar" data-original-title="Buscar">
 				<span class="icon-search" aria-hidden="true"></span>
 			</button>
+			<button id="tezza_limpiar" style="margin-left:4px;margin-right:10px;border-radius:3px;" type="button" class="btn" title="" data-original-title="Limpiar">Limpiar</button>
 		</div>
 
 		<select id="tezza_area" name="tezza_area" onchange="this.form.submit();">
-			<option value="" selected="selected">- Todas las Áreas -</option>
-			<option value="1">1</option>
+			<option value="0" <?php echo !$this->tezza_area?"selected":"" ?> >- Todas las Áreas -</option>
+			<?php
+				if ( !empty($this->areas) ) :
+					foreach ($this->areas as $i => $area) :
+						echo "<option value='".$area->id."' ";
+						echo $this->tezza_area == $area->id?"selected":"";
+						echo " >";
+						echo $area->title;
+						echo "</option>";
+					endforeach;
+				endif;
+			?>
 		</select>
 	</div>
 
@@ -33,7 +44,7 @@ defined('_JEXEC') or die;
 			<tr>
 				<th width="1%">#</th>
 				<th width="2%">
-					<?php echo JHtml::_('grid.checkall'); ?>
+					<?php // echo JHtml::_('grid.checkall'); ?>
 				</th>
 				<th width="20%">
 					Formulario
@@ -61,7 +72,7 @@ defined('_JEXEC') or die;
 							<?php echo $this->pagination->getRowOffset($i); ?>
 						</td>
 						<td>
-							<?php echo JHtml::_('grid.id', $i, $row->id); ?>
+							<?php // echo JHtml::_('grid.id', $i, $row->id); ?>
 						</td>
 						<td>
 							<?php echo $row->title; ?>
@@ -95,3 +106,12 @@ defined('_JEXEC') or die;
 	<?php echo JHtml::_('form.token'); ?>
 
 </form>
+
+<script>
+
+document.getElementById("tezza_limpiar").addEventListener("click", function(){
+	document.getElementById("tezza_search").value = '';
+	document.getElementById("adminForm").submit();
+});
+
+</script>

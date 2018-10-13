@@ -22,6 +22,7 @@ class FrmTezzaViewForms extends JViewLegacy
 		$mainframe =JFactory::getApplication();
 
 		$this->tezza_search = $mainframe->getUserStateFromRequest( "tezza_search", 'tezza_search', '' );
+		$this->tezza_area = $mainframe->getUserStateFromRequest( "tezza_area", 'tezza_area', '' );
 
 		$this->addToolBar();
 
@@ -29,11 +30,9 @@ class FrmTezzaViewForms extends JViewLegacy
 		$this->items		= $this->get('Items');
 		$this->pagination	= $this->get('Pagination');
 
-		// Get data from area model
-
-		// $model_area = $this->getModel('areas');
-
-		// $this->areas = $model_area->get_all_areas();
+		// Get area model
+		$model_area =  JModelLegacy::getInstance('Areas', 'FrmTezzaModel');
+		$this->areas = $model_area->get_all_areas();
 
 		parent::display($tpl);
 	}
