@@ -41,6 +41,8 @@
 		<filename>controller.php</filename>
 		<folder>views</folder>
 		<folder>models</folder>
+		<foler>controllers</foler>
+		<folder>css</folder>
 	</files>
 
 	<administration>

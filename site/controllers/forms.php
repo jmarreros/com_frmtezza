@@ -15,7 +15,10 @@ defined('_JEXEC') or die('Restricted access');
  *
  * @since  0.0.1
  */
-class FrmTezzaController extends JControllerLegacy
+class FrmTezzaControllerForms extends JControllerLegacy
 {
-    protected $default_view = 'forms';
+    public function save()
+    {
+        $this->setRedirect(JRoute::_('index.php?option=com_frmtezza&view=forms', false));
+    }
 }
