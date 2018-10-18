@@ -9,6 +9,7 @@
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
+include_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/areas.php'); //include model area administrator
 
 /**
  * HTML View class for the frmtezza Component
@@ -26,17 +27,16 @@ class FrmTezzaViewForms extends JViewLegacy
 	 */
 	function display($tpl = null)
 	{
-		// Assign data to the view
-		$this->msg = $this->get('Msg');
+		$mainframe =JFactory::getApplication();
+		$this->tezza_search = $mainframe->getUserStateFromRequest( "tezza_search", 'tezza_search', '' );
+		$this->tezza_area = $mainframe->getUserStateFromRequest( "tezza_area", 'tezza_area', '' );
 
 		// Get data from the model
 		$this->items		= $this->get('Items');
 		$this->pagination	= $this->get('Pagination');
 
-
-// $view->setModel($this->getModel('MyAdminModel'));
-
-
+		$area = new FrmTezzaModelAreas();
+		$this->areas = $area->get_all_areas();
 
 		// Display the view
 		parent::display($tpl);

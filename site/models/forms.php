@@ -27,10 +27,10 @@ class FrmTezzaModelForms extends JModelList
 	protected function getListQuery()
 	{
 
-		// $mainframe =JFactory::getApplication();
+		$mainframe =JFactory::getApplication();
 
-		// $search = $mainframe->getUserStateFromRequest( "tezza_search", 'tezza_search', '' );
-		// $area = $mainframe->getUserStateFromRequest( "tezza_area", 'tezza_area', '' );
+		$search = $mainframe->getUserStateFromRequest( "tezza_search", 'tezza_search', '' );
+		$area = $mainframe->getUserStateFromRequest( "tezza_area", 'tezza_area', '' );
 
 		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true);
@@ -39,15 +39,15 @@ class FrmTezzaModelForms extends JModelList
 				->from($db->quoteName('#__frmtezza_v_user_forms'));
 
 		//Filter area
-		// if ( $area ){
-		// 	$query->where($db->quoteName('id_area')."=".$area);
-		// }
+		if ( $area ){
+			$query->where($db->quoteName('id_area')."=".$area);
+		}
 
 		//Filter forms title and user
-		// if ( $search = trim($search) ){
-		// 	$query->where($db->quoteName('name'). ' LIKE \'%'.$search.'%\'' , 'OR');
-		// 	$query->where($db->quoteName('title'). ' LIKE \'%'.$search.'%\'');
-		// }
+		if ( $search = trim($search) ){
+			$query->where($db->quoteName('name'). ' LIKE \'%'.$search.'%\'' , 'OR');
+			$query->where($db->quoteName('title'). ' LIKE \'%'.$search.'%\'');
+		}
 
 		$query->order('dt_register DESC');
 

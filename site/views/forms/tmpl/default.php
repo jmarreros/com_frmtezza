@@ -10,13 +10,43 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
+// Add style css file
 $jinput = JFactory::getApplication()->input;
 $document = JFactory::getDocument();
 $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
-
+// var_dump($this->areas);
 ?>
 
 <form action="index.php?option=com_frmtezza&view=forms" method="post" id="adminForm" name="adminForm">
+
+	<div class="container-filter">
+
+		<div class="tezza-search btn-wrapper input-append">
+			<input type="text" name="tezza_search" id="tezza_search" value="<?php echo $this->tezza_search; ?>" placeholder="Buscar" minlength=3>
+				<button type="submit" class="btn hasTooltip" title="" aria-label="Buscar" data-original-title="Buscar">
+				<span class="icon-search" aria-hidden="true"></span>
+			</button>
+			<button id="tezza_limpiar" style="margin-left:4px;margin-right:10px;border-radius:3px;" type="button" class="btn" title="" data-original-title="Limpiar">Limpiar</button>
+		</div>
+
+		<select class="tezza-area" id="tezza_area" name="tezza_area" onchange="this.form.submit();">
+			<option value="0" <?php echo !$this->tezza_area?"selected":"" ?> >- Todas las Áreas -</option>
+			<?php
+				if ( !empty($this->areas) ) :
+					foreach ($this->areas as $i => $area) :
+						echo "<option value='".$area->id."' ";
+						echo $this->tezza_area == $area->id?"selected":"";
+						echo " >";
+						echo $area->title;
+						echo "</option>";
+					endforeach;
+				endif;
+			?>
+		</select>
+
+	</div>
+
+	<hr>
 
 	<table class="table table-striped table-hover">
 		<thead>

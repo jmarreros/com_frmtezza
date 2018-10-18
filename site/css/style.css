@@ -1,3 +1,15 @@
+.container-filter{
+    display: block;
+    background-color:#f9f9f9;
+    padding:10px;
+    text-align: right;
+}
+
+.container-filter > .tezza-area,
+.container-filter > .tezza-search{
+    display: inline-block;
+}
+
 .pagination{
     width: 100%;
 }
@@ -7,7 +19,6 @@
     list-style: none;
     margin-top:25px;
 }
-
 
 .pagination-list li{
     display: inline-block;
@@ -30,3 +41,4 @@
     background: #dedede;
     color:gray;
 }
+
