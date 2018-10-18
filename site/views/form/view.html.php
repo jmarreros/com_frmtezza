@@ -26,6 +26,13 @@ class FrmTezzaViewForm extends JViewLegacy
 	 */
 	function display($tpl = null)
 	{
+		//Get id table form
+		$jinput = JFactory::getApplication()->input;
+		$this->idform = $jinput->get('idform');
+
+		//Get data form
+		$this->form = $this->get('Form');
+
 		// Display the view
 		parent::display($tpl);
 	}

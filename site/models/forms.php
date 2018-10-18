@@ -18,7 +18,6 @@ defined('_JEXEC') or die('Restricted access');
 class FrmTezzaModelForms extends JModelList
 {
 
-
 	/**
 	 * Method to build an SQL query to load the list data.
 	 *

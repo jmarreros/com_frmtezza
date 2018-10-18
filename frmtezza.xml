@@ -43,6 +43,7 @@
 		<folder>models</folder>
 		<foler>controllers</foler>
 		<folder>css</folder>
+		<folder>js</folder>
 	</files>
 
 	<administration>

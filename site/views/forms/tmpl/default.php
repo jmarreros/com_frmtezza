@@ -67,6 +67,9 @@ $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 				<th width="10%">
 					Aprobado
 				</th>
+				<th width="10%">
+					Detalle
+				</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -92,13 +95,17 @@ $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 						<td align="center">
 							<?php echo $row->approval; ?>
 						</td>
+						<td>
+							<?php $url = "index.php?option=com_frmtezza&view=form&idform=".$row->id; ?>
+							<a href="<?php echo $url ?>" >Ver</a>
+						</td>
 					</tr>
 				<?php endforeach; ?>
 			<?php endif; ?>
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="6">
+				<td colspan="7">
 					<?php echo $this->pagination->getListFooter(); ?>
 				</td>
 			</tr>
