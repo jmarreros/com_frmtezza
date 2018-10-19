@@ -23,15 +23,13 @@ class FrmTezzaControllerForm extends JControllerLegacy
         $application = JFactory::getApplication();
 
         $model = $this->getModel('form');
-        $val = $model->save();
+        $result = $model->save();
 
-        // if ( $val ){
-        //     $application->enqueueMessage('OK');
-        // } else {
-        //     $application->enqueueMessage('Error','error');
-        // }
-
-        $application->enqueueMessage($val);
+        if ( $result ){
+            $application->enqueueMessage('Se actualizó la solicitud');
+        } else {
+            $application->enqueueMessage('Hubo algún error al actualizar','error');
+        }
 
         $this->setRedirect(JRoute::_('index.php?option=com_frmtezza&view=forms'));
     }

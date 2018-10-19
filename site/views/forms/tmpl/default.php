@@ -54,7 +54,6 @@ $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
-				<th width="1%">#</th>
 				<th width="20%">
 					Formulario
 				</th>
@@ -81,9 +80,6 @@ $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 
 					<tr>
 						<td>
-							<?php echo $this->pagination->getRowOffset($i); ?>
-						</td>
-						<td>
 							<?php echo $row->title; ?>
 						</td>
 						<td>
@@ -96,7 +92,16 @@ $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 							<?php echo $row->dt_register; ?>
 						</td>
 						<td align="center">
-							<?php echo $row->approval; ?>
+							<?php
+								if ( ! is_null($row->approval) ){
+									if ( $row->approval == 1){
+										?><i class="fa fa-check-square ico-approval"></i><?php
+									}
+									else if ($row->approval == 0){
+										?><i class="fa fa-window-close ico-approval"></i><?php
+									}
+								}
+							?>
 						</td>
 						<td>
 							<?php $url = "index.php?option=com_frmtezza&view=form&idform=".$row->id; ?>
@@ -108,7 +113,7 @@ $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="7">
+				<td colspan="6">
 					<?php echo $this->pagination->getListFooter(); ?>
 				</td>
 			</tr>
