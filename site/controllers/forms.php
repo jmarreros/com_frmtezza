@@ -17,8 +17,4 @@ defined('_JEXEC') or die('Restricted access');
  */
 class FrmTezzaControllerForms extends JControllerLegacy
 {
-    public function save()
-    {
-        $this->setRedirect(JRoute::_('index.php?option=com_frmtezza&view=forms', false));
-    }
 }

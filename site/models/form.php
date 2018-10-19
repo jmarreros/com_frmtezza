@@ -24,9 +24,21 @@ class FrmTezzaModelForm extends JModelForm
         $object = new StdClass;
         $object->nombre = 'bar';
 
-
         return $object;
     }
 
+
+    public function save(){
+
+        $jinput = JFactory::getApplication()->input;
+
+        // Fields to save #_frmtezza_frm_user
+        $approval = $jinput->get('tezza_approval');
+        $observation = $jinput->get('tezza_observation');
+        $vb_rrhh = $jinput->get('tezza_vb_rrhh');
+        $observation_rrhh = $jinput->get('tezza_observation_rrhh');
+
+        return $approval.'-'.$observation.'-'.$vb_rrhh.'-'.$observation_rrhh;
+    }
 
 }

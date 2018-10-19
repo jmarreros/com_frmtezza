@@ -15,7 +15,10 @@ $jinput = JFactory::getApplication()->input;
 $document = JFactory::getDocument();
 $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 // var_dump($this->areas);
+
 ?>
+
+<jdoc:include type="message" />
 
 <form action="index.php?option=com_frmtezza&view=forms" method="post" id="adminForm" name="adminForm">
 

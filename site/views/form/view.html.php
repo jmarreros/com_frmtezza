@@ -36,4 +36,5 @@ class FrmTezzaViewForm extends JViewLegacy
 		// Display the view
 		parent::display($tpl);
 	}
+
 }
