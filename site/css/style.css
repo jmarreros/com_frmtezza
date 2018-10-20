@@ -84,6 +84,13 @@
     background-color:#b71027;
 }
 
+
+.form .meta-group{
+    width:100%;
+    clear: both;
+    float:none;
+}
+
 .ico-approval.fa-check-square{
     color:green;
 }

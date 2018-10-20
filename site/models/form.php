@@ -10,6 +10,8 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
+include_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/areas.php'); //include model area administrator
+
 /**
  * FrmTezza Model
  *
@@ -18,7 +20,12 @@ defined('_JEXEC') or die('Restricted access');
 class FrmTezzaModelForm extends JModelForm
 {
 
-    //Get data current id from #__frmtezza_frm_user from view
+    /**
+	 * Get data current id from #__frmtezza_frm_user from view, Joomla override function
+     * @param array necesary for override function
+	 * @param bool necesary for override function
+	 * @return  object  data for the view
+	 */
     public function getForm($data = array(), $loadData = true){
         $db = JFactory::getDbo();
         $user = JFactory::getUser();
@@ -39,7 +46,11 @@ class FrmTezzaModelForm extends JModelForm
         return $result;
     }
 
-
+    /**
+	 * Save data form request, data has two parts, for boss and for RRHH boss
+     *
+	 * @return  bool  data for the view
+	 */
     public function save(){
 
         $jinput = JFactory::getApplication()->input;
@@ -47,9 +58,9 @@ class FrmTezzaModelForm extends JModelForm
 
         // vars to save #_frmtezza_frm_user
         $approval = $jinput->get('tezza_approval');
-        $observation = $jinput->get('tezza_observation',null);
+        $observation = $jinput->get('tezza_observation',null,'STRING');
         $approval_rrhh = $jinput->get('tezza_vb_rrhh');
-        $observation_rrhh = $jinput->get('tezza_observation_rrhh',null);
+        $observation_rrhh = $jinput->get('tezza_observation_rrhh',null,'STRING');
         $user = $user->id;
         $idform = $jinput->get('idform');
 
@@ -59,8 +70,9 @@ class FrmTezzaModelForm extends JModelForm
 
         // -> Fields to update for boss approval
         $fields = array();
-        $fields[]  = $db->quoteName('id_boss').' = '.$user;
-        $fields[]  = $db->quoteName('observation').' = '.$db->quote($observation);
+        $fields[] = $db->quoteName('id_boss').' = '.$user;
+        $fields[] = $db->quoteName('observation').' = "'. addslashes($observation).'"';
+        $fields[] = $db->quoteName('dt_approval'). ' = now() ';
 
         if ( isset($approval) ){
             $fields[]  = $db->quoteName('approval').' = '.$approval;
@@ -69,17 +81,16 @@ class FrmTezzaModelForm extends JModelForm
         // -> Fields to update for boss rrhh approval
         $fields = array();
         $fields[]  = $db->quoteName('id_boss_rrhh').' = '.$user;
-        $fields[]  = $db->quoteName('observation_rrhh').' = '.$db->quote($observation_rrhh);
+        $fields[]  = $db->quoteName('observation_rrhh').' = "'.addslashes($observation_rrhh).'"';
+        $fields[] = $db->quoteName('dt_approval_rrhh'). ' = now() ';
 
         if ( isset($approval_rrhh) ){
-            $fields[]  = $db->quoteName('approval_rrhh').' = '.$approval_rrhh;
+            $fields[]  = $db->quoteName('approval_rrhh').' = 1';
         }
-
 
         // -> Conditions for which records should be updated.
         $conditions = array();
         $conditions[] = $db->quoteName('id').' = '.$idform;
-
 
         $query->update($db->quoteName('#__frmtezza_frm_user'))->set($fields)->where($conditions);
         $db->setQuery($query);
@@ -88,27 +99,46 @@ class FrmTezzaModelForm extends JModelForm
         return $result;
     }
 
+    /**
+	 * Validate if the current user is a boss from an specific area
+     *
+     * @param int area
+     *
+	 * @return  bool  true if is boss from an specific area
+	 */
+    public function getIsBoss( $id_area ){
+        $user = JFactory::getUser();
+        $user_id = $user->id;
+        $is_boss = false;
+
+        // Get boss group like '%jefe%'
+        $area = new FrmTezzaModelAreas();
+        $id_area_boss = $area->get_boss_group();
+
+        //Get all bosses from an specif area
+        $result = $area->get_user_by_groups($id_area_boss, $id_area);
+
+        foreach ($result as $area){
+            if ( $area->id == $user_id ){
+                $is_boss = true;
+                break;
+            }
+        }
+
+        return $is_boss;
+    }
+
+    /**
+	 * Validate if the current user is a boss from RRHH area
+     *
+     *
+	 * @return  bool  true if is boss from RRHH area
+	 */
+    public function getIsBossRRHH(){
+        $area = new FrmTezzaModelAreas();
+        $id_area_rrhh = $area->get_rrhh_group();
+
+        return $this->getIsBoss($id_area_rrhh);
+    }
+
 }
-
-
-// $db = JFactory::getDbo();
-
-// $query = $db->getQuery(true);
-
-// // Fields to update.
-// $fields = array(
-//     $db->quoteName('profile_value') . ' = ' . $db->quote('Updating custom message for user 1001.'),
-//     $db->quoteName('ordering') . ' = 2'
-// );
-
-// // Conditions for which records should be updated.
-// $conditions = array(
-//     $db->quoteName('user_id') . ' = 42',
-//     $db->quoteName('profile_key') . ' = ' . $db->quote('custom.message')
-// );
-
-// $query->update($db->quoteName('#__user_profiles'))->set($fields)->where($conditions);
-
-// $db->setQuery($query);
-
-// $result = $db->execute();

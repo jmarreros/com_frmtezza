@@ -79,7 +79,7 @@ class FrmTezzaModelAreas extends JModelList
 	 * @return  int  id user that is boss
 	 *
 	 */
-	private function get_boss_group(){
+	public function get_boss_group(){
 		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('id')
@@ -92,6 +92,25 @@ class FrmTezzaModelAreas extends JModelList
 
 
 	/**
+	 * Get the RRHH area group (like '%RRHH%'), in #__user_gropus joomla table
+	 *
+	 * @return  int  id user that is boss
+	 *
+	 */
+	public function get_rrhh_group(){
+		$db    = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('id')
+				->from($db->quoteName('#__usergroups'))
+				->where($db->quoteName('title') . " LIKE '%RRHH%'");
+
+		$db->setQuery($query);
+		return $db->loadResult();
+	}
+
+
+
+	/**
 	 * Get user by two groups, one boss group and other group
 	 *
 	 * @param int $group_boss boss group
@@ -100,7 +119,7 @@ class FrmTezzaModelAreas extends JModelList
 	 * @return  object  list of object user data
 	 *
 	 */
-	private function get_user_by_groups( $group_boss, $group ){
+	public function get_user_by_groups( $group_boss, $group ){
 		$db       = JFactory::getDbo();
 		$subQuery = $db->getQuery(true);
 		$query    = $db->getQuery(true);

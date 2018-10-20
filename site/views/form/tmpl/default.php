@@ -17,8 +17,8 @@ $document = JFactory::getDocument();
 $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 $document->addScript('components/'.$jinput->get('option').'/js/script.js');
 
-var_dump($this->form);
-
+var_dump($this->is_rrhh_boss);
+// var_dump($this->form);
 ?>
 
 <jdoc:include type="message" />
@@ -27,7 +27,7 @@ var_dump($this->form);
     <div class="msg-approval"></div>
     <section class="well top-bar" >
 
-        <div class="fields">
+        <fieldset class="fields" <?php echo !is_null($this->form->approval)?"disabled":"";  ?> >
             <div class="control-group">
 
                 <p><strong>Aprobar Solicitud: </strong><p>
@@ -47,14 +47,22 @@ var_dump($this->form);
                 <label for="tezza_observation"><strong>Observación: </strong></label>
                 <textarea name="tezza_observation" id="tezza_observation" class="tezza_observation" cols="50" rows="10"><?php echo $this->form->observation; ?></textarea>
             </div>
-        </div>
+            <div class='meta-group'>
+                <?php
+                    if (!is_null($this->form->approval) ){
+                        echo "<i> Por: ".$this->form->boss."<br>";
+                        echo $this->form->dt_approval."</i>";
+                    }
+                ?>
+            </div>
+        </fieldset>
 
-        <div class="fields">
+        <fieldset class="fields" <?php echo !is_null($this->form->approval_rrhh)?"disabled":"";  ?>>
             <div class="control-group">
 
                 <p><strong>RRHH: </strong><p>
                 <div>
-                    <input type="checkbox" name="tezza_vb_rrhh" id="tezza_vb_rrhh" value="1" />
+                    <input type="checkbox" name="tezza_vb_rrhh" id="tezza_vb_rrhh" value="1" <?php echo (!is_null($this->form->approval_rrhh) && $this->form->approval_rrhh==1)?"checked":""; ?> />
                     <label for="tezza_vb_rrhh">VB RRHH</label>
                 </div>
 
@@ -62,15 +70,24 @@ var_dump($this->form);
 
             <div class="control-group">
                 <label for="tezza_observation_rrhh"><strong>Observación: </strong></label>
-                <textarea name="tezza_observation_rrhh" id="tezza_observation_rrhh" class="tezza_observation" cols="50" rows="10"></textarea>
+                <textarea name="tezza_observation_rrhh" id="tezza_observation_rrhh" class="tezza_observation" cols="50" rows="10"><?php echo $this->form->observation_rrhh; ?></textarea>
             </div>
-        </div>
+
+            <div class='meta-group'>
+                <?php
+                    if (!is_null($this->form->approval_rrhh) ){
+                        echo "<i> Por: ".$this->form->boss_rrhh."<br>";
+                        echo $this->form->dt_approval_rrhh."</i>";
+                    }
+                ?>
+            </div>
+        </fieldset>
 
 
-        <div class="buttons">
-            <input class="btn btn-primary validate" type="submit" value="Guardar" onclick="Joomla.submitbutton('form.save')">
-            <a class="btn" title="Cancelar" href="<?php echo JRoute::_('index.php?option=com_frmtezza'); ?>">Cancelar</a>
-        </div>
+        <fieldset class="buttons">
+            <input class="btn btn-primary validate" type="submit" value="Guardar" onclick="Joomla.submitbutton('form.save')" <?php echo !is_null($this->form->approval_rrhh)?"style='display:none;'":"";  ?> >
+            <a class="btn" title="Cancelar" href="<?php echo JRoute::_('index.php?option=com_frmtezza'); ?>"><?php echo !is_null($this->form->approval_rrhh)?"Regresar":"Cancelar";  ?></a>
+        </fieldset>
 
     </section>
 
