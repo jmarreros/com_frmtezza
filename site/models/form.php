@@ -10,7 +10,7 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-include_once(JPATH_COMPONENT_ADMINISTRATOR.'/models/areas.php'); //include model area administrator
+include_once(JPATH_COMPONENT_SITE.'/helpers/helper.php'); //include model area administrator
 
 /**
  * FrmTezza Model
@@ -99,46 +99,5 @@ class FrmTezzaModelForm extends JModelForm
         return $result;
     }
 
-    /**
-	 * Validate if the current user is a boss from an specific area
-     *
-     * @param int area
-     *
-	 * @return  bool  true if is boss from an specific area
-	 */
-    public function getIsBoss( $id_area ){
-        $user = JFactory::getUser();
-        $user_id = $user->id;
-        $is_boss = false;
-
-        // Get boss group like '%jefe%'
-        $area = new FrmTezzaModelAreas();
-        $id_area_boss = $area->get_boss_group();
-
-        //Get all bosses from an specif area
-        $result = $area->get_user_by_groups($id_area_boss, $id_area);
-
-        foreach ($result as $area){
-            if ( $area->id == $user_id ){
-                $is_boss = true;
-                break;
-            }
-        }
-
-        return $is_boss;
-    }
-
-    /**
-	 * Validate if the current user is a boss from RRHH area
-     *
-     *
-	 * @return  bool  true if is boss from RRHH area
-	 */
-    public function getIsBossRRHH(){
-        $area = new FrmTezzaModelAreas();
-        $id_area_rrhh = $area->get_rrhh_group();
-
-        return $this->getIsBoss($id_area_rrhh);
-    }
 
 }

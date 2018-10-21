@@ -17,7 +17,7 @@ $document = JFactory::getDocument();
 $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 $document->addScript('components/'.$jinput->get('option').'/js/script.js');
 
-var_dump($this->is_rrhh_boss);
+// var_dump($this->is_rrhh_boss);
 // var_dump($this->form);
 ?>
 

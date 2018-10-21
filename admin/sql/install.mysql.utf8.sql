@@ -22,7 +22,7 @@ INNER JOIN `#__user_usergroup_map` AS `ugm` ON `u`.`id` = `ugm`.`user_id`
 INNER JOIN `#__usergroups` AS `ug` ON `ugm`.`group_id`=`ug`.`id` WHERE `ug`.`title` LIKE '%Area -%' AND `ug`.`title` NOT LIKE '%JEFE%';
 
 
-CREATE OR REPLACE VIEW `#__frmtezza_v_user_forms` AS SELECT tfu.id, fr.title, u.name, ug.title as area, ug.id as id_area, tfu.dt_register, tfu.approval, ub.name boss, tfu.observation, tfu.dt_approval, urh.name boss_rrhh, tfu.approval_rrhh, tfu.observation_rrhh, tfu.dt_approval_rrhh
+CREATE OR REPLACE VIEW `#__frmtezza_v_user_forms` AS SELECT tfu.id, fr.title, u.id id_user, u.name, ug.title as area, ug.id as id_area, tfu.dt_register, tfu.approval, ub.name boss, tfu.observation, tfu.dt_approval, urh.name boss_rrhh, tfu.approval_rrhh, tfu.observation_rrhh, tfu.dt_approval_rrhh
 FROM `#__frmtezza_frm_user` AS tfu
 INNER JOIN `#__users` AS u ON tfu.id_user = u.id
 INNER JOIN `#__facileforms_records` AS fr ON tfu.id_record = fr.id

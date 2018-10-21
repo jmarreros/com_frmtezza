@@ -44,6 +44,7 @@
 		<foler>controllers</foler>
 		<folder>css</folder>
 		<folder>js</folder>
+		<folder>helpers</folder>
 	</files>
 
 	<administration>

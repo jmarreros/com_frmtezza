@@ -10,6 +10,8 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
+include_once(JPATH_COMPONENT_SITE.'/helpers/helper.php'); //include model area administrator
+
 /**
  * FrmTezza Model
  *
@@ -25,9 +27,10 @@ class FrmTezzaModelForms extends JModelList
 	 */
 	protected function getListQuery()
 	{
-
+		$user = JFactory::getUser();
 		$mainframe =JFactory::getApplication();
 
+		//filters
 		$search = $mainframe->getUserStateFromRequest( "tezza_search", 'tezza_search', '' );
 		$area = $mainframe->getUserStateFromRequest( "tezza_area", 'tezza_area', '' );
 
@@ -37,16 +40,34 @@ class FrmTezzaModelForms extends JModelList
 		$query->select('*')
 				->from($db->quoteName('#__frmtezza_v_user_forms'));
 
+		// -- Filters --
+		//Filter forms title and user
+		if ( $search = trim($search) ){
+			$query->where($db->quoteName('name'). ' LIKE \'%'.$search.'%\' OR' . $db->quoteName('title'). ' LIKE \'%'.$search.'%\'');
+		}
 		//Filter area
 		if ( $area ){
 			$query->where($db->quoteName('id_area')."=".$area);
 		}
 
-		//Filter forms title and user
-		if ( $search = trim($search) ){
-			$query->where($db->quoteName('name'). ' LIKE \'%'.$search.'%\'' , 'OR');
-			$query->where($db->quoteName('title'). ' LIKE \'%'.$search.'%\'');
+		// -- Validate user --
+		$helper = new FrmTezzaHelper();
+		$is_rrhh_boss = $helper->getIsBossRRHH(); // Verify isbooss rrhh
+
+		// if not is boss rrhh filter data
+		if ( ! $is_rrhh_boss ){
+
+			$user_area = $helper->getUserArea();
+			$is_boss = $helper->getIsBoss($user_area);
+
+			if ( $is_boss ){ //all data from an specific area
+				$query->where($db->quoteName('id_area')."=".$user_area);
+			} else { //all data of the current user
+				$query->where($db->quoteName('id_user')."=".$user->id);
+			}
+
 		}
+
 
 		$query->order('dt_register DESC');
 
