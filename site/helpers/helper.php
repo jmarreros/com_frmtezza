@@ -64,7 +64,7 @@ class FrmTezzaHelper
     }
 
     /**
-	 * Get user area, filters only the first area found of the current user
+	 * Get user area, filters only the "first" area found of the current user
      *
      *
 	 * @return  int  User area

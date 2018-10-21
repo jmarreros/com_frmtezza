@@ -26,12 +26,20 @@ class FrmTezzaViewForm extends JViewLegacy
 	 */
 	function display($tpl = null)
 	{
+		// validation
+		$user = JFactory::getUser();
+		if ( ! $user->id ) return false;
+
 		//Assign model
 		$model = $this->getModel();
 		$jinput = JFactory::getApplication()->input;
 
+
 		$this->idform = $jinput->get('idform'); //Get id table form
 		$this->form = $model->getForm(); //Get form data (from the view all fields)
+
+		$this->validateForm = $model->ValidateShowForm();
+		$this->validateSave = $model->ValidateShowSaveButton();
 
 		// $id_area = $this->form->id_area;
 		// $this->is_area_boss = $model->getIsBoss($id_area); //get area if the user is boss

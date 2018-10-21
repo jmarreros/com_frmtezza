@@ -79,14 +79,14 @@ class FrmTezzaModelForm extends JModelForm
         }
 
         // -> Fields to update for boss rrhh approval
-        $fields = array();
-        $fields[]  = $db->quoteName('id_boss_rrhh').' = '.$user;
-        $fields[]  = $db->quoteName('observation_rrhh').' = "'.addslashes($observation_rrhh).'"';
-        $fields[] = $db->quoteName('dt_approval_rrhh'). ' = now() ';
+        // $fields = array();
+        // $fields[]  = $db->quoteName('id_boss_rrhh').' = '.$user;
+        // $fields[]  = $db->quoteName('observation_rrhh').' = "'.addslashes($observation_rrhh).'"';
+        // $fields[] = $db->quoteName('dt_approval_rrhh'). ' = now() ';
 
-        if ( isset($approval_rrhh) ){
-            $fields[]  = $db->quoteName('approval_rrhh').' = 1';
-        }
+        // if ( isset($approval_rrhh) ){
+        //     $fields[]  = $db->quoteName('approval_rrhh').' = 1';
+        // }
 
         // -> Conditions for which records should be updated.
         $conditions = array();
@@ -100,4 +100,107 @@ class FrmTezzaModelForm extends JModelForm
     }
 
 
+    /**
+	 * Validate if user has access to watch centain parts of the details form
+     *
+	 * @return  int
+     * -1 : not show at all
+     * 0 : not show fieldset
+     * 1 : show only first fieldset
+     * 2 : show both fieldset
+	 */
+    public function ValidateShowForm(){
+
+        $user = JFactory::getUser();
+        $helper = new FrmTezzaHelper();
+        $form = $this->getForm();
+
+        $id_user = $user->id;
+        $is_approval = $form->approval;
+        $is_approval_rrhh = $form->approval_rrhh;
+
+        // RRHH
+        $is_rrhh_boss = $helper->getIsBossRRHH();
+
+        if ( $is_rrhh_boss ) {
+            if ( $is_approval )
+                return 2;
+            else
+                return 1;
+        }
+
+        // Boss area
+        $id_area = $helper->getUserArea();
+        $is_boss = $helper->getIsBoss($id_area);
+        $id_form_area = $form->id_area;
+
+        if ( $id_area != $id_form_area ) return -1;
+
+        if ( $is_boss ){
+            if ( $is_approval && $is_approval_rrhh )
+                return 2;
+            else
+                return 1;
+        }
+
+        // Common user
+        if ( $is_approval && $is_approval_rrhh ) {
+            return 2;
+        } else if ( is_null($is_approval) ){
+            return 0;
+        } else {
+            return 1;
+        }
+
+    }
+
+
+
+    /**
+	 * Validate if form show save button
+     *
+	 * @return  bool
+	 */
+    public function ValidateShowSaveButton(){
+
+        $helper = new FrmTezzaHelper();
+        $form = $this->getForm();
+
+        $is_approval = $form->approval;
+        $is_approval_rrhh = $form->approval_rrhh;
+
+        // Boss area
+        $id_area = $helper->getUserArea();
+        $is_boss = $helper->getIsBoss($id_area);
+        $is_rrhh_boss = $helper->getIsBossRRHH();
+
+        // if ( $is_boss && is_null($is_approval) ){
+
+        // }
+
+        return $is_approval;
+    }
+
 }
+
+
+
+
+
+// // -- Validate user --
+// $helper = new FrmTezzaHelper();
+// $is_rrhh_boss = $helper->getIsBossRRHH(); // Verify isbooss rrhh
+
+// // if not is boss rrhh filter data
+// if ( ! $is_rrhh_boss ){
+
+//     $user_area = $helper->getUserArea();
+//     $is_boss = $helper->getIsBoss($user_area);
+
+//     if ( $is_boss ){ //all data from an specific area
+//         $query->where($db->quoteName('id_area')."=".$user_area);
+//     } else { //all data of the current user
+//         $query->where($db->quoteName('id_user')."=".$user->id);
+//     }
+
+// }

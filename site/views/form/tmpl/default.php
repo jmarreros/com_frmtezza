@@ -17,8 +17,13 @@ $document = JFactory::getDocument();
 $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 $document->addScript('components/'.$jinput->get('option').'/js/script.js');
 
-// var_dump($this->is_rrhh_boss);
-// var_dump($this->form);
+var_dump($this->validateSave);
+
+if ( $this->validateForm == -1 ) {
+    echo "<div class='alert alert-error'>No tiene acceso a ver este formulario</div>";
+    echo "<a href=". JRoute::_('index.php?option=com_frmtezza').">Regresar</a>";
+    return false;
+}
 ?>
 
 <jdoc:include type="message" />
@@ -27,6 +32,7 @@ $document->addScript('components/'.$jinput->get('option').'/js/script.js');
     <div class="msg-approval"></div>
     <section class="well top-bar" >
 
+        <?php if ( $this->validateForm >= 1 ): ?>
         <fieldset class="fields" <?php echo !is_null($this->form->approval)?"disabled":"";  ?> >
             <div class="control-group">
 
@@ -56,7 +62,9 @@ $document->addScript('components/'.$jinput->get('option').'/js/script.js');
                 ?>
             </div>
         </fieldset>
+        <?php endif; // >=1 ?>
 
+        <?php if ( $this->validateForm == 2 ): ?>
         <fieldset class="fields" <?php echo !is_null($this->form->approval_rrhh)?"disabled":"";  ?>>
             <div class="control-group">
 
@@ -82,11 +90,11 @@ $document->addScript('components/'.$jinput->get('option').'/js/script.js');
                 ?>
             </div>
         </fieldset>
-
+        <?php endif; // ==2 ?>
 
         <fieldset class="buttons">
-            <input class="btn btn-primary validate" type="submit" value="Guardar" onclick="Joomla.submitbutton('form.save')" <?php echo !is_null($this->form->approval_rrhh)?"style='display:none;'":"";  ?> >
-            <a class="btn" title="Cancelar" href="<?php echo JRoute::_('index.php?option=com_frmtezza'); ?>"><?php echo !is_null($this->form->approval_rrhh)?"Regresar":"Cancelar";  ?></a>
+            <input class="btn btn-primary validate" type="submit" value="Guardar" onclick="Joomla.submitbutton('form.save')" >
+            <a class="btn" title="Cancelar" href="<?php echo JRoute::_('index.php?option=com_frmtezza'); ?>">Cancelar</a>
         </fieldset>
 
     </section>
