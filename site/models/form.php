@@ -10,7 +10,7 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-include_once(JPATH_COMPONENT_SITE.'/helpers/helper.php'); //include model area administrator
+include_once(JPATH_COMPONENT_SITE.'/helpers/helper.php'); //include helper
 
 /**
  * FrmTezza Model
@@ -67,26 +67,30 @@ class FrmTezzaModelForm extends JModelForm
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
 
+        $fields = array();
+        $validateShowSaveButton = $this->ValidateShowSaveButton();
 
         // -> Fields to update for boss approval
-        $fields = array();
-        $fields[] = $db->quoteName('id_boss').' = '.$user;
-        $fields[] = $db->quoteName('observation').' = "'. addslashes($observation).'"';
-        $fields[] = $db->quoteName('dt_approval'). ' = now() ';
+        if ( $validateShowSaveButton == 1 ){
+            $fields[] = $db->quoteName('id_boss').' = '.$user;
+            $fields[] = $db->quoteName('observation').' = "'. addslashes($observation).'"';
+            $fields[] = $db->quoteName('dt_approval'). ' = now() ';
 
-        if ( isset($approval) ){
-            $fields[]  = $db->quoteName('approval').' = '.$approval;
+            if ( isset($approval) ){
+                $fields[]  = $db->quoteName('approval').' = '.$approval;
+            }
         }
 
         // -> Fields to update for boss rrhh approval
-        // $fields = array();
-        // $fields[]  = $db->quoteName('id_boss_rrhh').' = '.$user;
-        // $fields[]  = $db->quoteName('observation_rrhh').' = "'.addslashes($observation_rrhh).'"';
-        // $fields[] = $db->quoteName('dt_approval_rrhh'). ' = now() ';
+        if ( $validateShowSaveButton == 2 ){
+            $fields[]  = $db->quoteName('id_boss_rrhh').' = '.$user;
+            $fields[]  = $db->quoteName('observation_rrhh').' = "'.addslashes($observation_rrhh).'"';
+            $fields[] = $db->quoteName('dt_approval_rrhh'). ' = now() ';
 
-        // if ( isset($approval_rrhh) ){
-        //     $fields[]  = $db->quoteName('approval_rrhh').' = 1';
-        // }
+            if ( isset($approval_rrhh) ){
+                $fields[]  = $db->quoteName('approval_rrhh').' = 1';
+            }
+        }
 
         // -> Conditions for which records should be updated.
         $conditions = array();
@@ -157,50 +161,40 @@ class FrmTezzaModelForm extends JModelForm
 
 
     /**
-	 * Validate if form show save button
+	 * Validate if form show save button, and validate for saving function
      *
-	 * @return  bool
+	 * @return  mixed
+     *  false - not boss
+     * 1 - boss aproval
+     * 2- boss rrhh aproval
+     *
 	 */
     public function ValidateShowSaveButton(){
 
         $helper = new FrmTezzaHelper();
+        $id_area = $helper->getUserArea();
         $form = $this->getForm();
 
+        // Approbal
         $is_approval = $form->approval;
         $is_approval_rrhh = $form->approval_rrhh;
 
         // Boss area
-        $id_area = $helper->getUserArea();
         $is_boss = $helper->getIsBoss($id_area);
         $is_rrhh_boss = $helper->getIsBossRRHH();
 
-        // if ( $is_boss && is_null($is_approval) ){
+        // First part show for saving
+        if ( $is_boss && is_null($is_approval) ){
+            return 1;
+        }
 
-        // }
+        // Second part show for saving
+        if ( $is_rrhh_boss && is_null($is_approval_rrhh) && $is_approval ){
+            return 2;
+        }
 
-        return $is_approval;
+        return false;
     }
 
 }
 
-
-
-
-
-// // -- Validate user --
-// $helper = new FrmTezzaHelper();
-// $is_rrhh_boss = $helper->getIsBossRRHH(); // Verify isbooss rrhh
-
-// // if not is boss rrhh filter data
-// if ( ! $is_rrhh_boss ){
-
-//     $user_area = $helper->getUserArea();
-//     $is_boss = $helper->getIsBoss($user_area);
-
-//     if ( $is_boss ){ //all data from an specific area
-//         $query->where($db->quoteName('id_area')."=".$user_area);
-//     } else { //all data of the current user
-//         $query->where($db->quoteName('id_user')."=".$user->id);
-//     }
-
-// }

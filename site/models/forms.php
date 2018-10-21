@@ -10,7 +10,7 @@
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 
-include_once(JPATH_COMPONENT_SITE.'/helpers/helper.php'); //include model area administrator
+include_once(JPATH_COMPONENT_SITE.'/helpers/helper.php'); //include helper
 
 /**
  * FrmTezza Model
@@ -31,7 +31,6 @@ class FrmTezzaModelForms extends JModelList
 		$mainframe =JFactory::getApplication();
 
 		//filters
-		$search = $mainframe->getUserStateFromRequest( "tezza_search", 'tezza_search', '' );
 		$area = $mainframe->getUserStateFromRequest( "tezza_area", 'tezza_area', '' );
 
 		$db    = JFactory::getDbo();
@@ -40,11 +39,6 @@ class FrmTezzaModelForms extends JModelList
 		$query->select('*')
 				->from($db->quoteName('#__frmtezza_v_user_forms'));
 
-		// -- Filters --
-		//Filter forms title and user
-		if ( $search = trim($search) ){
-			$query->where($db->quoteName('name'). ' LIKE \'%'.$search.'%\' OR' . $db->quoteName('title'). ' LIKE \'%'.$search.'%\'');
-		}
 		//Filter area
 		if ( $area ){
 			$query->where($db->quoteName('id_area')."=".$area);

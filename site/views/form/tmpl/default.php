@@ -17,7 +17,7 @@ $document = JFactory::getDocument();
 $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 $document->addScript('components/'.$jinput->get('option').'/js/script.js');
 
-var_dump($this->validateSave);
+// var_dump($this->validateSave);
 
 if ( $this->validateForm == -1 ) {
     echo "<div class='alert alert-error'>No tiene acceso a ver este formulario</div>";
@@ -93,7 +93,9 @@ if ( $this->validateForm == -1 ) {
         <?php endif; // ==2 ?>
 
         <fieldset class="buttons">
-            <input class="btn btn-primary validate" type="submit" value="Guardar" onclick="Joomla.submitbutton('form.save')" >
+            <?php if ($this->validateSave): ?>
+                <input class="btn btn-primary validate" type="submit" value="Guardar" onclick="Joomla.submitbutton('form.save')" >
+            <?php endif; ?>
             <a class="btn" title="Cancelar" href="<?php echo JRoute::_('index.php?option=com_frmtezza'); ?>">Cancelar</a>
         </fieldset>
 
