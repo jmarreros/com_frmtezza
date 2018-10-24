@@ -111,15 +111,153 @@
     border-color: #ebccd1;
 }
 
+#enviado,
 .alert-success {
     color: #3c763d;
     background-color: #dff0d8;
     border-color: #d6e9c6;
 }
 
+#enviado p{
+    font-weight: 500;
+}
+
 .alert-warning {
     color: #8a6d3b;
     background-color: #fcf8e3;
     border-color: #faebcc;
+}
+
+
+/* Formulario de Vacaciones */
+
+.frm-tezza {
+    border: 1px solid #ccc;
+    box-shadow: #ccc 0 0 2px;
+    margin-bottom: 40px;
+    background:white;
+}
+
+.frm-tezza .bfPage > section,
+.frm-tezza .bfPage > fieldset{
+    padding:16px;
+}
+
+.frm-tezza .form-actions{
+    border-top:0;
+    margin-bottom: 0;
+}
+
+.frm-tezza legend{
+    font-size:16px;
+}
+
+.frm-tezza input[readonly]{
+    background-color:white!important;
+    border:none;
+    box-shadow: none;
+}
+
+#cabecera{
+    padding-top:0;
+    padding-bottom:0;
+}
+
+#cabecera input{
+    text-align: right;
+    font-weight: 400;
+    width:100%;
+    max-width: 100%!important;
+}
+
+#cabecera label{
+    display: none;
+}
+
+#tituloformulario h3{
+    padding:12px;
+    text-align: center;
+    line-height: 32px;
+}
+
+#imagelogo{
+    width:30%;
+}
+
+#imagelogo p{
+    padding: 10px;
+    margin:0;
+}
+
+#tituloformulario{
+    width:70%;
+    padding:6px;
+    margin:0;
+}
+
+#datospersonales{
+    padding-top:0;
+    padding-bottom: 0;
+}
+
+#tipodescanso{
+    padding-top:0;
+}
+
+#tipodescanso label.radio:first-child{
+    margin-right: 32px;
+}
+
+#datospersonales .row-fluid{
+    padding-top:6px;
+}
+
+#datosarea{
+    padding-top:0;
+}
+
+#datosarea input[readonly],
+#datospersonales input[readonly]{
+    max-width: 70%;
+    float: right;
+}
+
+#datosarea label,
+#datospersonales label{
+    width:20%;
+    display: inline-block;
+}
+
+#documento .bfClearfix .control-group,
+#nombrecodigo .bfClearfix .control-group{
+    margin-bottom:0;
+}
+
+
+.picker__header img{
+    display: none;
+}
+
+.picker__header .picker__select--month,
+.picker__header .picker__select--year,
+.picker__nav--next,
+.picker__nav--prev{
+    display: inline-block;
+}
+
+
+.picker__header .picker__nav--next,
+.picker__header .picker__nav--prev{
+    display:block;
+    height:40px!important;
+}
+
+#fechareincorporacion .input-append input,
+#fechasdescanso .input-append input{
+    max-width:80%;
+}
+
+#fechareincorporacion #bfElemWrap377{
+    width:50%;
 }
 

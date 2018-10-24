@@ -15,6 +15,7 @@ $jinput = JFactory::getApplication()->input;
 $document = JFactory::getDocument();
 $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 
+var_dump($this->userData);
 ?>
 
 <jdoc:include type="message" />

@@ -87,4 +87,34 @@ class FrmTezzaHelper
 
         return $area;
     }
+
+    /**
+	 * Get user data, additional custom fields, test for BF
+     *
+     *
+	 * @return  object  User data
+	 */
+    public function getUserData(){
+        $db = JFactory::getDbo();
+        $user = JFactory::getUser();
+
+        $query = $db->getQuery(true);
+
+        $query->select(array('f.name', 'f.title', 'v.value'))
+            ->from($db->quoteName('#__fields','f'))
+            ->join('INNER', $db->quoteName('#__fields_values','v').' ON '.$db->quoteName('f.id').'='.$db->quoteName('v.field_id'))
+            ->where($db->quoteName('v.item_id').'='.$user->id);
+
+        $db->setQuery($query);
+        $user_data =  $db->loadAssocList('name', 'value');
+
+        return $user_data;
+    }
+
+
+    // Aux function
+    public function queryToStr( $query ){
+        $db = JFactory::getDbo();
+        return $db->replacePrefix((string) $query);
+    }
 }
