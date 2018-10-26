@@ -255,9 +255,16 @@
 #fechareincorporacion .input-append input,
 #fechasdescanso .input-append input{
     max-width:80%;
+    border: 1px solid #d8d8d8;
 }
 
 #fechareincorporacion #bfElemWrap377{
     width:50%;
+}
+
+
+.bfMaxLengthCounter{
+    color:#ccc;
+    font-size:12px;
 }
 
