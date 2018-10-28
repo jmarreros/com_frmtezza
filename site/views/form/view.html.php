@@ -40,6 +40,7 @@ class FrmTezzaViewForm extends JViewLegacy
 
 		$this->validateForm = $model->ValidateShowForm();
 		$this->validateSave = $model->ValidateShowSaveButton();
+		$this->dataBF = $model->getDataRecordBF($this->form->id_record);
 
 		// $id_area = $this->form->id_area;
 		// $this->is_area_boss = $model->getIsBoss($id_area); //get area if the user is boss

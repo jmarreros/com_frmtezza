@@ -196,5 +196,30 @@ class FrmTezzaModelForm extends JModelForm
         return false;
     }
 
+
+    /**
+	 * Get data from Breezing Forms
+     *
+     * @param int id_record id record Breezing Forms
+     *
+	 * @return  Object
+     *
+	 */
+    public function getDataRecordBF( $id_record ){
+        $db = JFactory::getDbo();
+
+        $query = $db->getQuery(true);
+
+        $query->select( array($db->quoteName('name'), $db->quoteName('value')) );
+        $query->from($db->quoteName('#__facileforms_subrecords'));
+        $query->where($db->quoteName('record') . ' = ' . $id_record );
+
+        $db->setQuery($query);
+
+        $result =  $db->loadAssocList('name', 'value');
+
+        return $result;
+    }
+
 }
 

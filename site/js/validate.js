@@ -1,14 +1,3 @@
-
-
-// var myEl = document.getElementById('bfSubmitButton');
-
-// myEl.addEventListener('click', function(e) {
-//     alert('ss');
-//     return false;
-// }, false);
-
-
-
 (function( $ ) {
 
     $( document ).ready(function() {

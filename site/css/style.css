@@ -170,10 +170,6 @@
     max-width: 100%!important;
 }
 
-#cabecera label{
-    display: none;
-}
-
 #tituloformulario h3{
     padding:12px;
     text-align: center;
@@ -263,8 +259,54 @@
 }
 
 
+#botonesinferiores .bfElemWrap,
+#botonesinferiores #cancelar{
+    float:right;
+}
+
+#botonesinferiores #cancelar{
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-top:4px;
+}
+
+
 .bfMaxLengthCounter{
     color:#ccc;
     font-size:12px;
 }
 
+
+.block{
+    float:left;
+    padding:10px;
+    width:50%;
+}
+
+.clear{
+    clear:both;
+}
+
+
+/* Responsive */
+
+@media (max-width:768px){
+
+    #tipodescanso label,
+    #fechasdescanso .row-fluid .span6,
+    #datosarea .row-fluid .span6,
+    #datospersonales .row-fluid .span6,
+    #cabecera .row-fluid .bfClearfix > *{
+        width:100%;
+        margin-left:0;
+    }
+    #fechareincorporacion .row-fluid .control-group{
+        width: 100%!important;
+    }
+    #tipodescanso label{
+        margin-left:20px;
+    }
+    #tipodescanso input{
+        margin-left:-18px;
+    }
+}

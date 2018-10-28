@@ -41,13 +41,15 @@ class FrmTezzaViewForms extends JViewLegacy
 		$helper = new FrmTezzaHelper();
 		$this->is_boss_rrhh = $helper->getIsBossRRHH();
 
-		// tmp
-		$this->userData = $helper->getUserData();
-
 		// Display the view
 		parent::display($tpl);
 	}
 }
+
+
+
+// tmp
+// $this->userData = $helper->getUserData();
 
 
 // public function __construct() {

@@ -24,6 +24,12 @@ if ( $this->validateForm == -1 ) {
     echo "<a href=". JRoute::_('index.php?option=com_frmtezza').">Regresar</a>";
     return false;
 }
+
+// var_dump($this->dataBF);
+// var_dump(file_exists( $_SERVER{'DOCUMENT_ROOT'} .'layouts/descansovacacional.php'));
+// var_dump( file_exists(dirname(__FILE__).'/layouts/descansovacacional.php' ));
+// var_dump( $this->dataBF );
+
 ?>
 
 <jdoc:include type="message" />
@@ -101,9 +107,16 @@ if ( $this->validateForm == -1 ) {
 
     </section>
 
-    <section class="well form">
-        <input type="text" value="">
-    </section>
+    <?php
+        // Load Layout, according to the form name
+        // ----------------------------------------
+        $layout = $this->form->frmname;
+        if ( file_exists(dirname(__FILE__).'/layouts/'.$layout.'.php') ){
+            include_once('layouts/'.$layout.'.php');
+        } else {
+            echo "<div>No existe layout para este formulario 🔥</div>";
+        }
+    ?>
 
     <input type="hidden" name="idform" value="<?php echo $this->idform; ?>">
     <input type = "hidden" name = "task" value = "" />
