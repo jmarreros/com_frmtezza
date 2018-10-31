@@ -63,7 +63,7 @@ if ( $this->validateForm == -1 ) {
                 <?php
                     if (!is_null($this->form->approval) ){
                         echo "<i> Por: ".$this->form->boss."<br>";
-                        echo $this->form->dt_approval."</i>";
+                        echo date("d/m/Y h:i:s A",strtotime($this->form->dt_approval))."</i>";
                     }
                 ?>
             </div>
@@ -91,7 +91,7 @@ if ( $this->validateForm == -1 ) {
                 <?php
                     if (!is_null($this->form->approval_rrhh) ){
                         echo "<i> Por: ".$this->form->boss_rrhh."<br>";
-                        echo $this->form->dt_approval_rrhh."</i>";
+                        echo date("d/m/Y h:i:s A",strtotime($this->form->dt_approval_rrhh))."</i>";
                     }
                 ?>
             </div>

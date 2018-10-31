@@ -175,5 +175,37 @@
         <div class="clear"></div>
     </fieldset>
 
+
+    <fieldset id="aprobacion">
+        <?php if ( $this->validateForm >= 1 ): ?>
+            <div class="block">
+                <?php
+                    if (!is_null($this->form->approval) && $this->form->approval==1):
+                        echo "<div>";
+                        echo "<i> Aprobado por: ".$this->form->boss."<br>";
+                        echo date("d/m/Y h:i:s A",strtotime($this->form->dt_approval))."</i>";
+                        echo "</div>";
+                    endif;
+                ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if ( $this->validateForm == 2 ): ?>
+            <div class="block">
+                <?php
+                    if (!is_null($this->form->approval_rrhh)):
+                        echo "<div>";
+                        echo "<i> VB RRHH por: ".$this->form->boss_rrhh."<br>";
+                        echo date("d/m/Y h:i:s A",strtotime($this->form->dt_approval_rrhh))."</i>";
+                        echo "</div>";
+                    endif;
+                ?>
+            </div>
+        <?php endif; ?>
+
+    </fieldset>
+
+    <div class="clear"></div>
+
 </section>
 <div class="clear"></div>

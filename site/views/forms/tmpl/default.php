@@ -47,20 +47,23 @@ $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 	<table class="table table-striped table-hover">
 		<thead>
 			<tr>
+				<th width="10%">
+					Fecha
+				</th>
 				<th width="20%">
 					Formulario
+				</th>
+				<th width="10%">
+					Aprobado
+				</th>
+				<th width="10%">
+					RRHH
 				</th>
 				<th width="20%">
 					Usuario
 				</th>
 				<th width="20%">
 					Area
-				</th>
-				<th width="10%">
-					Fecha
-				</th>
-				<th width="10%">
-					Aprobado
 				</th>
 				<th width="10%">
 					Detalle
@@ -73,16 +76,10 @@ $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 
 					<tr>
 						<td>
+							<?php echo date("d/m/Y",strtotime($row->dt_register)); ?>
+						</td>
+						<td>
 							<?php echo $row->title; ?>
-						</td>
-						<td>
-							<?php echo $row->name; ?>
-						</td>
-						<td>
-							<?php echo $row->area; ?>
-						</td>
-						<td>
-							<?php echo $row->dt_register; ?>
 						</td>
 						<td align="center">
 							<?php
@@ -96,9 +93,27 @@ $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 								}
 							?>
 						</td>
+						<td align="center">
+							<?php
+								if ( ! is_null($row->approval_rrhh) ){
+									if ( $row->approval_rrhh == 1){
+										?><i class="fa fa-check-square ico-approval"></i><?php
+									}
+									else if ($row->approval_rrhh == 0){
+										?><i class="fa fa-window-close ico-approval"></i><?php
+									}
+								}
+							?>
+						</td>
+						<td>
+							<?php echo $row->name; ?>
+						</td>
+						<td>
+							<?php echo $row->area; ?>
+						</td>
 						<td>
 							<?php $url = "index.php?option=com_frmtezza&view=form&idform=".$row->id; ?>
-							<a href="<?php echo $url ?>" >Ver</a>
+							<a class="btn btn-primary small" href="<?php echo $url ?>" >Ver</a>
 						</td>
 					</tr>
 				<?php endforeach; ?>
@@ -106,7 +121,7 @@ $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="6">
+				<td colspan="7">
 					<?php echo $this->pagination->getListFooter(); ?>
 				</td>
 			</tr>

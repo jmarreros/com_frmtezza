@@ -288,6 +288,19 @@
 }
 
 
+#aprobacion{
+    margin-bottom: 20px;
+}
+
+#aprobacion .block > div{
+    border:2px dashed #ccc;
+    padding:10px;
+}
+
+.btn.small{
+    padding:2px 8px;
+}
+
 /* Responsive */
 
 @media (max-width:768px){
