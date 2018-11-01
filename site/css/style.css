@@ -323,3 +323,45 @@
         margin-left:-18px;
     }
 }
+
+
+/* Print */
+
+.contentpane #adminForm{
+    display: none;
+}
+
+.contentpane .frm-tezza{
+    width: 800px;
+    margin:auto;
+    margin-top:10px;
+}
+
+.contentpane #tituloformulario{
+    width: 65%;
+}
+
+.contentpane .block{
+    width:45%;
+    padding:6px;
+}
+
+.contentpane label{
+    font-weight: 500;
+}
+
+.contentpane #notasadicionales textarea,
+.contentpane #fechareincorporacion input,
+.contentpane #fechasdescanso input,
+.contentpane #tipodescanso input{
+    width: 70%;
+}
+
+.contentpane .top-icons{
+    display: none;
+}
+
+.top-icons a{
+    display: inline-block;
+    padding-bottom:4px;
+}

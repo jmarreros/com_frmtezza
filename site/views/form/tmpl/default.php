@@ -14,6 +14,8 @@ defined('_JEXEC') or die('Restricted access');
 JHtml::_('jquery.framework', true, true);
 $jinput = JFactory::getApplication()->input;
 $document = JFactory::getDocument();
+
+$document->addScript($this->baseurl.'/media/system/js/core.js');
 $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 $document->addScript('components/'.$jinput->get('option').'/js/script.js');
 
@@ -30,8 +32,6 @@ if ( $this->validateForm == -1 ) {
 // var_dump( $this->dataBF );
 
 ?>
-
-<jdoc:include type="message" />
 
 <form method="post" id="adminForm" name="adminForm" class="form">
     <div class="msg-approval"></div>
@@ -83,7 +83,7 @@ if ( $this->validateForm == -1 ) {
 
             <div class="control-group">
                 <label for="tezza_observation_rrhh"><strong>Observación: </strong></label>
-                <textarea name="tezza_observation_rrhh" id="tezza_observation_rrhh" class="tezza_observation" cols="50" rows="10"><?php echo $this->form->observation_rrhh; ?></textarea>
+                <textarea name="tezza_observation_rrhh" id="tezza_observation_rrhh" class="tezza_observation" cols="50" rows="5"><?php echo $this->form->observation_rrhh; ?></textarea>
             </div>
 
             <div class='meta-group'>
@@ -106,22 +106,20 @@ if ( $this->validateForm == -1 ) {
 
     </section>
 
-    <?php
-        // Load Layout, according to the form name
-        // ----------------------------------------
-        $layout = $this->form->frmname;
-        if ( file_exists(dirname(__FILE__).'/layouts/'.$layout.'.php') ){
-            include_once('layouts/'.$layout.'.php');
-        } else {
-            echo "<div>No existe layout para este formulario 🔥</div>";
-        }
-    ?>
 
     <input type="hidden" name="idform" value="<?php echo $this->idform; ?>">
     <input type = "hidden" name = "task" value = "" />
 	<input type = "hidden" name = "option" value = "com_frmtezza" />
 </form>
 
-
-
+<?php
+    // Load Layout, according to the form name
+    // ----------------------------------------
+    $layout = $this->form->frmname;
+    if ( file_exists(dirname(__FILE__).'/layouts/'.$layout.'.php') ){
+        include_once('layouts/'.$layout.'.php');
+    } else {
+        echo "<div>No existe layout para este formulario 🔥</div>";
+    }
+?>
 

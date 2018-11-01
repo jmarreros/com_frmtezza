@@ -33,11 +33,18 @@
     }
 
     #notasadicionales textarea{
-        height:100px;
+        height:50px;
         background:white;
         border:none;
     }
 </style>
+
+<div class="top-icons">
+    <?php $url = "index.php?option=com_frmtezza&view=form&idform=".$this->idform."&tmpl=component" ?>
+    <a href="<?php echo $url ?>" target="_blank">
+        <span><i class="fa fa-print"></i> Imprimir</span>
+    </a>
+</div>
 
 <section class="frm-tezza">
     <section id="cabecera">
@@ -208,4 +215,5 @@
     <div class="clear"></div>
 
 </section>
+
 <div class="clear"></div>

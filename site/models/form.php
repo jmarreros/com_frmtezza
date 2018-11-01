@@ -100,9 +100,44 @@ class FrmTezzaModelForm extends JModelForm
         $db->setQuery($query);
         $result = $db->execute();
 
+        // Sending mail
+        $this->SendMailApprobal($approval);
+
         return $result;
     }
 
+    /**
+	 * Sending email for approbal
+     * @param bool for validation
+	 * @return  bool  return success or not
+	 */
+    public function SendMailApprobal( $approval ){
+
+        if ( isset($approval) ){
+
+            $mailer = JFactory::getMailer();
+            $config = JFactory::getConfig();
+            $user = JFactory::getUser();
+
+            $sender = array(
+                $config->get( 'mailfrom' ),
+                $config->get( 'fromname' )
+            );
+
+            $recipient1 = $user->email;
+            $subject = "Se registró una neuva solicitud";
+            $body = "Una nueva solicitud se ha creado, puedes verla en la intranet";
+
+            $mailer->setSender($sender);
+            $mailer->addRecipient($recipient1);
+
+            $mailer->setSubject($subject);
+            $mailer->setBody($body);
+
+            return $mailer->Send();
+        }
+
+    }
 
     /**
 	 * Validate if user has access to watch centain parts of the details form
