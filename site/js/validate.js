@@ -6,9 +6,9 @@
         // --- Formulario de vacaciones consistencia ---
         if ( $('.frm-tezza.vacaciones').length ){
 
-            var ddesde =  $('#ff_elem683');
-            var dhasta = $('#ff_elem569');
-            var dretorno = $('#ff_elem377');
+            var ddesde =  $('[name="ff_nm_descansodesde[]"]');
+            var dhasta = $('[name="ff_nm_descansohasta[]"]');
+            var dretorno = $('[name="ff_nm_reincorporacion[]"]');
 
             //Establecer a readonly las fechas
             ddesde.prop('readonly', true);
@@ -16,7 +16,7 @@
             dretorno.prop('readonly', true);
 
             // Evento para validar fechas antes y después
-            $('#ff_elem836').on('click',function(){
+            $('[name="ff_nm_enviar[]"]').on('click',function(){
 
                 var fdesde = convert_date(ddesde.val());
                 var fhasta = convert_date(dhasta.val());

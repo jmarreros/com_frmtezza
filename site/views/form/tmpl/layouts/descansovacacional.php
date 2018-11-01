@@ -74,21 +74,21 @@
             <div class="block">
                 <div class="controls form-inline">
                     <label class="control-label">Código</label>
-                    <input readonly="readonly" type="text" value="<?= $this->dataBF['codigo']; ?>" >
+                    <input readonly="readonly" type="text" value="<?= isset($this->dataBF['codigo'])?$this->dataBF['codigo']:''; ?>" >
                 </div>
             </div>
 
             <div class="block">
                 <div class="controls form-inline">
                     <label class="control-label">Tipo Doc</label>
-                    <input readonly="readonly" type="text" value="<?= $this->dataBF['tipodocumento']; ?>" >
+                    <input readonly="readonly" type="text" value="<?= isset($this->dataBF['tipodocumento'])?$this->dataBF['tipodocumento']:''; ?>" >
                 </div>
             </div>
 
             <div class="block">
                 <div class="controls form-inline">
                     <label class="control-label">#Documento</label>
-                    <input readonly="readonly" type="text" value="<?= $this->dataBF['numerodocumento']; ?>" >
+                    <input readonly="readonly" type="text" value="<?= isset($this->dataBF['numerodocumento'])?$this->dataBF['numerodocumento']:''; ?>" >
                 </div>
             </div>
 
@@ -102,7 +102,7 @@
             <div class="block">
                 <div class="controls form-inline">
                     <label class="control-label">Cargo</label>
-                    <input readonly="readonly" type="text" value="<?= $this->dataBF['cargo']; ?>" >
+                    <input readonly="readonly" type="text" value="<?= isset($this->dataBF['cargo'])?$this->dataBF['cargo']:''; ?>" >
                 </div>
             </div>
 

@@ -59,6 +59,8 @@ class FrmTezzaModelAreas extends JModelList
 
 		if ( $group_boss == 0)  $group_boss = $this->get_boss_group();
 
+		if ( ! $group_boss ) return null;
+
 		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true);
 

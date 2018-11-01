@@ -36,6 +36,7 @@ class FrmTezzaHelper
         $area = new FrmTezzaModelAreas();
         $id_area_boss = $area->get_boss_group();
 
+        if ( ! $id_area_boss ) return false;
 
         //Get all bosses from an specif area
         $result = $area->get_user_by_groups($id_area_boss, $id_area);

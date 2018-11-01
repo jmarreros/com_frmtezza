@@ -25,7 +25,6 @@ if ( $this->validateForm == -1 ) {
     return false;
 }
 
-// var_dump($this->dataBF);
 // var_dump(file_exists( $_SERVER{'DOCUMENT_ROOT'} .'layouts/descansovacacional.php'));
 // var_dump( file_exists(dirname(__FILE__).'/layouts/descansovacacional.php' ));
 // var_dump( $this->dataBF );

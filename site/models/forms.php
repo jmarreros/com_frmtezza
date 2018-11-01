@@ -62,7 +62,6 @@ class FrmTezzaModelForms extends JModelList
 
 		}
 
-
 		$query->order('dt_register DESC');
 
 		return $query;
