@@ -258,3 +258,79 @@ class FrmTezzaModelForm extends JModelForm
 
 }
 
+
+
+
+
+
+// $title = JFactory::getDocument()->getTitle();
+// $url = JURI::base()."administracion-formularios.html";
+// $id_jefe = ff_getSubmit('id_jefe');
+// $user_jefe = JFactory::getUser($id_jefe);
+
+// $config = JFactory::getConfig();
+// $sender = array(
+// 	$config->get( 'mailfrom' ),
+// 	$config->get( 'fromname' )
+// );
+
+// $recipient1 = $user->email;
+// $recipient2 = $user_jefe->email;
+
+// if ( $recipient1 ){
+// 	$subject = "Creaste una nueva solicitud - ".$title;
+// 	$body = "<p>Puedes hacer un seguimiento de la solicitud de ".$title." en la intranet</p>";
+// 	$body .= "<a href='".$url."' target='_blank'>Ver Solicitud</a>";
+
+// 	$mailer1 = JFactory::getMailer();
+// 	$mailer1->isHtml(true);
+// 	$mailer1->Encoding = 'base64';
+
+// 	$mailer1->setSender($sender);
+// 	$mailer1->addRecipient( $recipient1 );
+
+// 	$mailer1->setSubject($subject);
+// 	$mailer1->setBody($body);
+
+// 	$mailer1->Send();
+// }
+
+
+
+
+
+// // -- Obtener el ID del área de Jefes
+
+// $query = $db->getQuery(true);
+// $query->select(array('id'))
+// 	->from($db->quoteName('#__usergroups'))
+// 	->where($db->quoteName('title') . " LIKE '%Area%JEFE%'")
+// 	->setLimit(1);
+
+// $db->setQuery($query);
+
+// $area_jefes =  $db->loadResult();
+// $area_user = $area->group_id;
+// $id_jefe = 0;
+
+// // -- Obtener el ID del jefe de área
+
+// $subQuery = $db->getQuery(true);
+// $query    = $db->getQuery(true);
+
+// // Create the base subQuery select statement.
+// $subQuery->select(array('user_id'))
+// 	->from($db->quoteName($db->getPrefix().'user_usergroup_map'))
+// 	->where($db->quoteName('group_id') . ' = ' . $area_jefes);
+
+// // Create the base select statement.
+// $query->select(array('user_id'))
+// 	->from($db->quoteName('#__frmtezza_v_user_area'))
+// 	->where($db->quoteName('group_id') . ' = ' . $area_user)
+// 	->where($db->quoteName('user_id') . ' IN (' . $subQuery . ')');
+
+// $db->setQuery($query);
+// $id_jefe = $db->loadResult();
+
+// ff_setValue('id_jefe',$id_jefe); //Asignar el valor del id jefe al campo
+

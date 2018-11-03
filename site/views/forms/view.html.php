@@ -28,6 +28,13 @@ class FrmTezzaViewForms extends JViewLegacy
 	 */
 	function display($tpl = null)
 	{
+
+		$user = JFactory::getUser();
+		if ( ! $user->id ){
+			$application = JFactory::getApplication();
+			$application->enqueueMessage('Tienes que estar conectado para ver esta pantalla <a href="'.JURI::base().'">Conectarse</a>','Error');
+		}
+
 		$mainframe =JFactory::getApplication();
 		$this->tezza_area = $mainframe->getUserStateFromRequest( "tezza_area", 'tezza_area', '' );
 
@@ -41,9 +48,11 @@ class FrmTezzaViewForms extends JViewLegacy
 		$helper = new FrmTezzaHelper();
 		$this->is_boss_rrhh = $helper->getIsBossRRHH();
 
+
 		// Display the view
 		parent::display($tpl);
 	}
+
 }
 
 
