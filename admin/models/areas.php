@@ -76,7 +76,7 @@ class FrmTezzaModelAreas extends JModelList
 	}
 
 	/**
-	 * Get the boss group (like '%Jefe%'), in #__user_gropus joomla table, should exists only one register
+	 * Get the boss group (like '%Area%Jefe%'), in #__user_gropus joomla table, should exists only one register
 	 *
 	 * @return  int  id user that is boss
 	 *
@@ -86,7 +86,7 @@ class FrmTezzaModelAreas extends JModelList
 		$query = $db->getQuery(true);
 		$query->select('id')
 				->from($db->quoteName('#__usergroups'))
-				->where($db->quoteName('title') . " LIKE '%JEFE%'");
+				->where($db->quoteName('title') . " LIKE '%Area%JEFE%'");
 
 		$db->setQuery($query);
 		return $db->loadResult();

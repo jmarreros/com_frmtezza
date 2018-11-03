@@ -54,7 +54,6 @@ class FrmTezzaHelper
     /**
 	 * Validate if the current user is a boss from RRHH area
      *
-     *
 	 * @return  bool  true if is boss from RRHH area
 	 */
     public function getIsBossRRHH(){
@@ -63,6 +62,45 @@ class FrmTezzaHelper
 
         return $this->getIsBoss($id_area_rrhh);
     }
+
+
+    /**
+	 * Get id user boos from an specific area, only the fist one
+     *
+     * @param int area
+     *
+	 * @return  int  id user booss area
+	 */
+    public function getBossArea($id_area){
+        // Get boss group like '%jefe%'
+        $area = new FrmTezzaModelAreas();
+        $id_area_boss = $area->get_boss_group();
+
+        if ( ! $id_area_boss ) return false;
+
+        //Get all bosses from an specif area
+        $result = $area->get_user_by_groups($id_area_boss, $id_area);
+
+        if ( isset ($result[0]) ){
+            return $result[0]->id;
+        }
+        return false;
+    }
+
+    /**
+	 * Get id user boos from RRHH area, only the fist one
+     *
+     * @param int area
+     *
+	 * @return  int  id user booss area RRHH
+	 */
+    public function getBossAreaRRHH(){
+        $area = new FrmTezzaModelAreas();
+        $id_area_rrhh = $area->get_rrhh_group();
+
+        return $this->getBossArea($id_area_rrhh);
+    }
+
 
     /**
 	 * Get user area, filters only the "first" area found of the current user
@@ -92,7 +130,6 @@ class FrmTezzaHelper
     /**
 	 * Get user data, additional custom fields, test for BF
      *
-     *
 	 * @return  object  User data
 	 */
     public function getUserData(){
@@ -110,6 +147,31 @@ class FrmTezzaHelper
         $user_data =  $db->loadAssocList('name', 'value');
 
         return $user_data;
+    }
+
+    /**
+	 * Get user object from idForm, specilla for obtain user author form
+     *
+	 * @return  mixed  User object, or false
+	 */
+    public function getUserIdForm($idform){
+        $db = JFactory::getDbo();
+
+        $query = $db->getQuery(true);
+        $query->select(array('id_user'))
+                ->from($db->quoteName('#__frmtezza_frm_user'))
+                ->where($db->quoteName('id').'='.$idform);
+
+        $db->setQuery($query);
+
+        $id_user =  $db->loadResult();
+
+        if ( isset($id_user) ){
+            $user = JFactory::getUser($id_user);
+            return $user;
+        }
+
+        return false;
     }
 
 

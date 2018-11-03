@@ -30,7 +30,7 @@ if ( $this->validateForm == -1 ) {
 // var_dump(file_exists( $_SERVER{'DOCUMENT_ROOT'} .'layouts/descansovacacional.php'));
 // var_dump( file_exists(dirname(__FILE__).'/layouts/descansovacacional.php' ));
 // var_dump( $this->dataBF );
-
+// var_dump($this->sendmail);
 ?>
 
 <form method="post" id="adminForm" name="adminForm" class="form">

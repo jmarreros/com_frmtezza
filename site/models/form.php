@@ -79,6 +79,9 @@ class FrmTezzaModelForm extends JModelForm
             if ( isset($approval) ){
                 $fields[]  = $db->quoteName('approval').' = '.$approval;
             }
+
+            // Sending mail
+            $this->SendMailApprobal($approval);
         }
 
         // -> Fields to update for boss rrhh approval
@@ -100,44 +103,110 @@ class FrmTezzaModelForm extends JModelForm
         $db->setQuery($query);
         $result = $db->execute();
 
-        // Sending mail
-        $this->SendMailApprobal($approval);
-
         return $result;
     }
 
     /**
 	 * Sending email for approbal
+     *
      * @param bool for validation
+     *
 	 * @return  bool  return success or not
 	 */
     public function SendMailApprobal( $approval ){
 
-        if ( isset($approval) ){
+        // Validation
+        if ( ! isset($approval) ) return false;
 
-            $mailer = JFactory::getMailer();
-            $config = JFactory::getConfig();
-            $user = JFactory::getUser();
+        // General vars
+        $jinput = JFactory::getApplication()->input;
+        $idform = $jinput->get('idform');
+        $helper = new FrmTezzaHelper();
+        $form = $this->getForm();
+        $url = JURI::base()."administracion-formularios.html";
 
-            $sender = array(
-                $config->get( 'mailfrom' ),
-                $config->get( 'fromname' )
-            );
+        // Get email user author form
+        $user = $helper->getUserIdForm($idform); //get user object
+        if ( ! $user->id ) return false; // Validation
+        $user_email =  $user->email; // Get user author
 
-            $recipient1 = $user->email;
-            $subject = "Se registró una neuva solicitud";
-            $body = "Una nueva solicitud se ha creado, puedes verla en la intranet";
+        if ( $approval ){
+            $subject = "Actualización de Solicitud de ".$form->title."";
+            $body = "<p>Se aprobó tu solicitud de ".$form->title.", puedes verla en la intranet:</p>";
+            $body .= "<a href='".$url."' target='_blank'>Ver Solicitud</a>";
 
-            $mailer->setSender($sender);
-            $mailer->addRecipient($recipient1);
+            $this->sendMail($user_email, $subject, $body);
 
-            $mailer->setSubject($subject);
-            $mailer->setBody($body);
+            // Get email boss RRHH
+            $id_user_rrhh = $helper->getBossAreaRRHH();
+            $user_rrhh = JFactory::getUser($id_user_rrhh);
 
-            return $mailer->Send();
+            if ( ! $user_rrhh->id ) return false;
+            $user_rrhh_email = $user_rrhh->email; //Get boss rrhh email
+
+            $subject = "Se aprobó una nueva solicitud de ".$form->title."";
+            $body = "<p>Se aprobó una solicitud de ".$form->title.", puedes verla en la intranet para dar VB:</p>";
+            $body .= "<a href='".$url."' target='_blank'>Ver Solicitud</a>";
+
+            $this->sendMail($user_rrhh_email, $subject, $body);
+        } else {
+            $subject = "Actualización de Solicitud de ".$form->title."";
+            $body = "<p>No se aprobó tu solicitud de ".$form->title.", puedes verla en la intranet:</p>";
+            $body .= "<a href='".$url."' target='_blank'>Ver Solicitud</a>";
+
+            $this->sendMail($user_email, $subject, $body);
         }
 
     }
+
+   /**
+	 * General function for sending email
+     *
+     * @param string email @
+     * @param string subject email
+     * @param string body email
+     *
+	 * @return  bool  return success or not
+	 */
+    public function sendMail($email, $subject, $body){
+        $mailer = JFactory::getMailer();
+        $config = JFactory::getConfig();
+
+        $sender = array(
+            $config->get( 'mailfrom' ),
+            $config->get( 'fromname' )
+        );
+
+        $mailer->isHtml(true);
+        $mailer->Encoding = 'base64';
+
+        $mailer->setSender($sender);
+        $mailer->addRecipient($email);
+
+        $mailer->setSubject($subject);
+        $mailer->setBody($body);
+
+        return $mailer->Send();
+    }
+
+
+    // $subject = "Creaste una nueva solicitud - ".$title;
+	// $body = "<p>Puedes hacer un seguimiento de la solicitud de ".$title." en la intranet</p>";
+	// $body .= "<a href='".$url."' target='_blank'>Ver Solicitud</a>";
+
+	// $mailer1 = JFactory::getMailer();
+	// $mailer1->isHtml(true);
+	// $mailer1->Encoding = 'base64';
+
+	// $mailer1->setSender($sender);
+	// $mailer1->addRecipient( $recipient1 );
+
+	// $mailer1->setSubject($subject);
+	// $mailer1->setBody($body);
+
+    // $mailer1->Send();
+
+
 
     /**
 	 * Validate if user has access to watch centain parts of the details form
