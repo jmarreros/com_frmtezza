@@ -12,7 +12,7 @@
             var id_jefe = $('[name="ff_nm_id_jefe[]"]');
 
             if ( ! id_jefe.val() ) {
-                alert('El Usario No tiene que tener un área asignada');
+                alert('El Usario No tiene área asignada');
                 $('[name="ff_nm_enviar[]"]').prop('disabled', true);
             }
 
