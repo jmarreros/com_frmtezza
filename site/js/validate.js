@@ -9,6 +9,12 @@
             var ddesde =  $('[name="ff_nm_descansodesde[]"]');
             var dhasta = $('[name="ff_nm_descansohasta[]"]');
             var dretorno = $('[name="ff_nm_reincorporacion[]"]');
+            var id_jefe = $('[name="ff_nm_id_jefe[]"]');
+
+            if ( ! id_jefe.val() ) {
+                alert('El Usario No tiene que tener un área asignada');
+                $('[name="ff_nm_enviar[]"]').prop('disabled', true);
+            }
 
             //Establecer a readonly las fechas
             ddesde.prop('readonly', true);
@@ -21,6 +27,7 @@
                 var fdesde = convert_date(ddesde.val());
                 var fhasta = convert_date(dhasta.val());
                 var fretorno = convert_date(dretorno.val());
+
 
                 if ( fhasta < fdesde) {
                     alert('Existe un error en las fechas desde - hasta');
