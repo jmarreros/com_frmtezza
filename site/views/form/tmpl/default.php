@@ -9,6 +9,9 @@
 
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
+include_once(JPATH_COMPONENT_SITE.'/helpers/helper.php'); //include helper
+
+$helper = new FrmTezzaHelper();
 
 // Add style css file
 JHtml::_('jquery.framework', true, true);
@@ -31,6 +34,8 @@ if ( $this->validateForm == -1 ) {
 // var_dump( file_exists(dirname(__FILE__).'/layouts/descansovacacional.php' ));
 // var_dump( $this->dataBF );
 // var_dump($this->sendmail);
+
+
 ?>
 
 <form method="post" id="adminForm" name="adminForm" class="form">

@@ -39,9 +39,15 @@
 
             });
 
-        } // fin formulario vacaciones
+        }
+        else{ // --- Para cualquier otro formulario ---
+            $('[name="ff_nm_enviar[]"]').on('click',function(){
+                ff_validate_submit(this,'click');
+            });
+        }
 
-    });
+
+    }); // document ready
 
     function convert_date( strDate ){
         var dateParts = strDate.split("/");

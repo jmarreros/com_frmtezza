@@ -175,6 +175,12 @@ class FrmTezzaHelper
     }
 
 
+    // Convert 24 format to am - pm time format
+    public function time_format( $str ){
+        return date( "g:i a", strtotime($str) );
+    }
+
+
     // Aux function
     public function queryToStr( $query ){
         $db = JFactory::getDbo();
