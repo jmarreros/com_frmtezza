@@ -370,6 +370,7 @@
     padding-top:0;
 }
 
+#recuperacion,
 #permisohoras,
 #motivoausencia,
 #diasausencia,
@@ -377,6 +378,12 @@
     margin-top:20px;
 }
 
+#recuperacion .row-fluid,
 #permisohoras .row-fluid{
     padding-top:0;
+}
+
+#recuperacion .bfElemWrap input,
+#permisohoras .bfElemWrap input{
+    max-width:60%;
 }
