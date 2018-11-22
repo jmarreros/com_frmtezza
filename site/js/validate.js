@@ -2,6 +2,12 @@
 
     $( document ).ready(function() {
 
+        var id_jefe = $('[name="ff_nm_id_jefe[]"]');
+
+        if ( ! id_jefe.val() ) {
+            alert('El Usario No tiene área asignada');
+            $('[name="ff_nm_enviar[]"]').prop('disabled', true);
+        }
 
         // --- Formulario de vacaciones consistencia ---
         if ( $('.frm-tezza.vacaciones').length ){
@@ -9,12 +15,6 @@
             var ddesde =  $('[name="ff_nm_descansodesde[]"]');
             var dhasta = $('[name="ff_nm_descansohasta[]"]');
             var dretorno = $('[name="ff_nm_reincorporacion[]"]');
-            var id_jefe = $('[name="ff_nm_id_jefe[]"]');
-
-            if ( ! id_jefe.val() ) {
-                alert('El Usario No tiene área asignada');
-                $('[name="ff_nm_enviar[]"]').prop('disabled', true);
-            }
 
             //Establecer a readonly las fechas
             ddesde.prop('readonly', true);

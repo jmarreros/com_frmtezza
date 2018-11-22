@@ -365,3 +365,18 @@
     display: inline-block;
     padding-bottom:4px;
 }
+
+.bfQuickMode #otrosection .row-fluid{
+    padding-top:0;
+}
+
+#permisohoras,
+#motivoausencia,
+#diasausencia,
+#notasadicionales{
+    margin-top:20px;
+}
+
+#permisohoras .row-fluid{
+    padding-top:0;
+}

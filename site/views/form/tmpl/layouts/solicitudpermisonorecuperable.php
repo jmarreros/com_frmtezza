@@ -9,21 +9,22 @@
     }
 
     #notasadicionales,
-    #turnoprogramado,
-    #nuevoturno{
+    #diasausencia,
+    #motivoausencia,
+    #permisohoras{
         margin-top:20px;
     }
 
     #notasadicionales label,
-    #turnoprogramado label,
-    #nuevoturno label{
+    #diasausencia label,
+    #motivoausencia label{
         width:20%;
         float:left;
     }
 
     #notasadicionales textarea,
-    #turnoprogramado input,
-    #nuevoturno input{
+    #diasausencia input,
+    #motivoausencia input{
         width:80%;
         float:right;
     }
@@ -34,8 +35,8 @@
         border:none;
     }
 
-    #turnoprogramado .block,
-    #nuevoturno .block{
+    #diasausencia .block,
+    #motivoausencia .block{
         width:33%;
     }
 </style>
@@ -54,7 +55,7 @@
         </section>
         <section id="tituloformulario" class="block">
             <div>
-                <h3>Solicitud de Cambio de Turno</h3>
+                <h3>Solicitud de Permiso No Recuperado</h3>
             </div>
             <div class="fecha-creacion">
                 <?php
@@ -120,24 +121,19 @@
     </fieldset>
 
 
-    <fieldset id="turnoprogramado">
-        <legend>Turno Programado (No va a venir)</legend>
+    <fieldset id="diasausencia">
+        <legend>Día(s) Ausencia</legend>
         <div class="block">
             <div class="controls form-inline">
-                <label class="control-label">Día</label>
-                <input readonly="readonly" type="text" value="<?= $this->dataBF['diaprogramado']; ?>" >
+                <label class="control-label">Desde</label>
+                <input readonly="readonly" type="text" value="<?= $this->dataBF['diadesde']; ?>" >
             </div>
         </div>
+
         <div class="block">
             <div class="controls form-inline">
-                <label class="control-label">Hora inicio</label>
-                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horainicioprogramada']); ?>" >
-            </div>
-        </div>
-        <div class="block">
-            <div class="controls form-inline">
-                <label class="control-label">Hora fin</label>
-                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horafinprogramada']); ?>" >
+                <label class="control-label">Hasta</label>
+                <input readonly="readonly" type="text" value="<?= $this->dataBF['diahasta']; ?>" >
             </div>
         </div>
 
@@ -146,31 +142,44 @@
 
 
 
-    <fieldset id="nuevoturno">
-        <legend>Nuevo Turno</legend>
+    <fieldset id="motivoausencia">
+        <legend>Motivo de Ausencia</legend>
         <div class="block">
             <div class="controls form-inline">
-                <label class="control-label">Día</label>
-                <input readonly="readonly" type="text" value="<?= $this->dataBF['dianuevoturno']; ?>" >
+                <label class="control-label">Motivo</label>
+                <input readonly="readonly" type="text" value="<?= $this->dataBF['motivo']; ?>" >
+            </div>
+        </div>
+
+        <?php if ( isset($this->dataBF['motivootros']) ):?>
+        <div class="block">
+            <div class="controls form-inline">
+                <label class="control-label">Otro</label>
+                <input readonly="readonly" type="text" value="<?= $this->dataBF['motivootros']; ?>" >
+            </div>
+        </div>
+        <?php endif; ?>
+
+        <div class="clear"></div>
+    </fieldset>
+
+    <fieldset id="permisohoras">
+        <legend>Horas</legend>
+        <div class="block">
+            <div class="controls form-inline">
+                <label class="control-label">Hora salida</label>
+                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horasalida']); ?>" >
             </div>
         </div>
         <div class="block">
             <div class="controls form-inline">
-                <label class="control-label">Hora inicio</label>
-                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horainicionuevoturno']); ?>" >
-            </div>
-        </div>
-        <div class="block">
-            <div class="controls form-inline">
-                <label class="control-label">Hora fin</label>
-                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horafinnuevoturno']); ?>" >
+                <label class="control-label">Hora retorno</label>
+                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horaretorno']); ?>" >
             </div>
         </div>
 
         <div class="clear"></div>
     </fieldset>
-
-
 
 
     <fieldset id="notasadicionales">

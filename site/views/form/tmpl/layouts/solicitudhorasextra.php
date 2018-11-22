@@ -54,7 +54,7 @@
         </section>
         <section id="tituloformulario" class="block">
             <div>
-                <h3>Solicitud de Cambio de Turno</h3>
+                <h3>Solicitud de Horas Extra</h3>
             </div>
             <div class="fecha-creacion">
                 <?php
@@ -121,7 +121,7 @@
 
 
     <fieldset id="turnoprogramado">
-        <legend>Turno Programado (No va a venir)</legend>
+        <legend>Fecha/Hora</legend>
         <div class="block">
             <div class="controls form-inline">
                 <label class="control-label">Día</label>
@@ -147,23 +147,23 @@
 
 
     <fieldset id="nuevoturno">
-        <legend>Nuevo Turno</legend>
+        <legend>Compensación</legend>
         <div class="block">
             <div class="controls form-inline">
                 <label class="control-label">Día</label>
-                <input readonly="readonly" type="text" value="<?= $this->dataBF['dianuevoturno']; ?>" >
+                <input readonly="readonly" type="text" value="<?= $this->dataBF['diacompensacion']; ?>" >
             </div>
         </div>
         <div class="block">
             <div class="controls form-inline">
                 <label class="control-label">Hora inicio</label>
-                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horainicionuevoturno']); ?>" >
+                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horainiciocompensacion']); ?>" >
             </div>
         </div>
         <div class="block">
             <div class="controls form-inline">
                 <label class="control-label">Hora fin</label>
-                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horafinnuevoturno']); ?>" >
+                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horafincompensacion']); ?>" >
             </div>
         </div>
 
