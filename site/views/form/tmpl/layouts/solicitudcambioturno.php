@@ -14,11 +14,17 @@
         margin-top:20px;
     }
 
-    #notasadicionales label,
-    #turnoprogramado label,
-    #nuevoturno label{
+    #notasadicionales label{
         width:20%;
         float:left;
+    }
+
+    #turnoprogramado input,
+    #nuevoturno input,
+    #turnoprogramado label,
+    #nuevoturno label{
+        width:100% !important;
+        float:none !important;
     }
 
     #notasadicionales textarea,
@@ -37,6 +43,7 @@
     #turnoprogramado .block,
     #nuevoturno .block{
         width:33%;
+
     }
 </style>
 
@@ -124,24 +131,46 @@
         <legend>Turno Programado (No va a venir)</legend>
         <div class="block">
             <div class="controls form-inline">
-                <label class="control-label">Día</label>
-                <input readonly="readonly" type="text" value="<?= $this->dataBF['diaprogramado']; ?>" >
+                <label class="control-label">Día Inicial</label>
+                <input readonly="readonly" type="text" value="<?= $this->dataBF['diaprogramado1']; ?>" >
             </div>
         </div>
         <div class="block">
             <div class="controls form-inline">
                 <label class="control-label">Hora inicio</label>
-                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horainicioprogramada']); ?>" >
+                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horainicioprogramada1']); ?>" >
             </div>
         </div>
         <div class="block">
             <div class="controls form-inline">
                 <label class="control-label">Hora fin</label>
-                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horafinprogramada']); ?>" >
+                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horafinprogramada1']); ?>" >
             </div>
         </div>
 
         <div class="clear"></div>
+
+        <?php if (isset($this->dataBF['diaprogramado2']) || isset($this->dataBF['horainicioprogramada2']) || isset($this->dataBF['horafinprogramada2'])): ?>
+            <div class="block">
+                <div class="controls form-inline">
+                    <label class="control-label">Día Final (Si aplica)</label>
+                    <input readonly="readonly" type="text" value="<?= isset($this->dataBF['diaprogramado2'])?$this->dataBF['diaprogramado2']:''; ?>" >
+                </div>
+            </div>
+            <div class="block">
+                <div class="controls form-inline">
+                    <label class="control-label">Hora inicio</label>
+                    <input readonly="readonly" type="text" value="<?= isset($this->dataBF['horainicioprogramada2'])?$helper->time_format($this->dataBF['horainicioprogramada2']):''; ?>" >
+                </div>
+            </div>
+            <div class="block">
+                <div class="controls form-inline">
+                    <label class="control-label">Hora fin</label>
+                    <input readonly="readonly" type="text" value="<?= isset($this->dataBF['horafinprogramada2'])?$helper->time_format($this->dataBF['horafinprogramada2']):''; ?>" >
+                </div>
+            </div>
+        <?php endif; ?>
+
     </fieldset>
 
 
@@ -151,23 +180,45 @@
         <div class="block">
             <div class="controls form-inline">
                 <label class="control-label">Día</label>
-                <input readonly="readonly" type="text" value="<?= $this->dataBF['dianuevoturno']; ?>" >
+                <input readonly="readonly" type="text" value="<?= $this->dataBF['dianuevoturno1']; ?>" >
             </div>
         </div>
         <div class="block">
             <div class="controls form-inline">
                 <label class="control-label">Hora inicio</label>
-                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horainicionuevoturno']); ?>" >
+                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horainicionuevoturno1']); ?>" >
             </div>
         </div>
         <div class="block">
             <div class="controls form-inline">
                 <label class="control-label">Hora fin</label>
-                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horafinnuevoturno']); ?>" >
+                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horafinnuevoturno1']); ?>" >
             </div>
         </div>
 
         <div class="clear"></div>
+
+        <?php if(isset($this->dataBF['dianuevoturno2']) || isset($this->dataBF['horainicionuevoturno2']) || isset($this->dataBF['horafinnuevoturno2'])): ?>
+            <div class="block">
+                <div class="controls form-inline">
+                    <label class="control-label">Día Fin (Si aplica)</label>
+                    <input readonly="readonly" type="text" value="<?= isset($this->dataBF['dianuevoturno2'])?$this->dataBF['dianuevoturno2']:''; ?>" >
+                </div>
+            </div>
+            <div class="block">
+                <div class="controls form-inline">
+                    <label class="control-label">Hora inicio</label>
+                    <input readonly="readonly" type="text" value="<?= isset($this->dataBF['horainicionuevoturno2'])?$helper->time_format($this->dataBF['horainicionuevoturno2']):''; ?>" >
+                </div>
+            </div>
+            <div class="block">
+                <div class="controls form-inline">
+                    <label class="control-label">Hora fin</label>
+                    <input readonly="readonly" type="text" value="<?= isset($this->dataBF['horafinnuevoturno2'])?$helper->time_format($this->dataBF['horafinnuevoturno2']):''; ?>" >
+                </div>
+            </div>
+        <?php endif; ?>
+
     </fieldset>
 
 

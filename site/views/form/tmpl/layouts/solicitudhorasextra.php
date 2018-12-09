@@ -145,31 +145,31 @@
     </fieldset>
 
 
-
+    <?php if ( isset($this->dataBF['diacompensacion']) || isset($this->dataBF['horainiciocompensacion']) || isset($this->dataBF['horafincompensacion']) ):?>
     <fieldset id="nuevoturno">
         <legend>Compensación</legend>
         <div class="block">
             <div class="controls form-inline">
                 <label class="control-label">Día</label>
-                <input readonly="readonly" type="text" value="<?= $this->dataBF['diacompensacion']; ?>" >
+                <input readonly="readonly" type="text" value="<?= isset($this->dataBF['diacompensacion'])?$this->dataBF['diacompensacion']:''; ?>" >
             </div>
         </div>
         <div class="block">
             <div class="controls form-inline">
                 <label class="control-label">Hora inicio</label>
-                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horainiciocompensacion']); ?>" >
+                <input readonly="readonly" type="text" value="<?= isset($this->dataBF['horainiciocompensacion'])?$helper->time_format($this->dataBF['horainiciocompensacion']):''; ?>" >
             </div>
         </div>
         <div class="block">
             <div class="controls form-inline">
                 <label class="control-label">Hora fin</label>
-                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horafincompensacion']); ?>" >
+                <input readonly="readonly" type="text" value="<?= isset($this->dataBF['horafincompensacion'])?$helper->time_format($this->dataBF['horafincompensacion']):''; ?>" >
             </div>
         </div>
 
         <div class="clear"></div>
     </fieldset>
-
+    <?php endif; ?>
 
 
 

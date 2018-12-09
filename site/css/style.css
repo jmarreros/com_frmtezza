@@ -387,3 +387,14 @@
 #permisohoras .bfElemWrap input{
     max-width:60%;
 }
+
+.cambioturno #nuevoturno .row-fluid,
+.cambioturno #turnoprogramado .row-fluid{
+    padding-top:0;
+}
+
+.cambioturno #nuevoturno > .row-fluid,
+.cambioturno #turnoprogramado > .row-fluid{
+    padding-bottom: 20px;
+}
+
