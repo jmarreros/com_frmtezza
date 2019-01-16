@@ -91,7 +91,7 @@ class FrmTezzaModelForm extends JModelForm
             $fields[] = $db->quoteName('dt_approval_rrhh'). ' = now() ';
 
             if ( isset($approval_rrhh) ){
-                $fields[]  = $db->quoteName('approval_rrhh').' = 1';
+                $fields[]  = $db->quoteName('approval_rrhh').' = '.$approval_rrhh;
             }
         }
 

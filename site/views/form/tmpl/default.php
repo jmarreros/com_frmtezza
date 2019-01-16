@@ -79,9 +79,14 @@ if ( $this->validateForm == -1 ) {
             <div class="control-group">
 
                 <p><strong>RRHH: </strong><p>
+
                 <div>
-                    <input type="checkbox" name="tezza_vb_rrhh" id="tezza_vb_rrhh" value="1" <?php echo (!is_null($this->form->approval_rrhh) && $this->form->approval_rrhh==1)?"checked":""; ?> />
-                    <label for="tezza_vb_rrhh">VB RRHH</label>
+                    <input type="radio" name="tezza_vb_rrhh" id="tezza_vb_rrhh_yes" value="1" <?php echo (!is_null($this->form->approval_rrhh) && $this->form->approval_rrhh==1)?"checked":""; ?> />
+                    <label for="tezza_vb_rrhh_yes"> <i class="fa fa-check-square ico-approval"></i> VB OK</label>
+                </div>
+                <div>
+                    <input type="radio" name="tezza_vb_rrhh" id="tezza_vb_rrhh_no" value="0"  <?php echo (!is_null($this->form->approval_rrhh) && $this->form->approval_rrhh==0)?"checked":""; ?> />
+                    <label for="tezza_vb_rrhh_no"> <i class="fa fa-window-close ico-approval"></i> Descartar</label>
                 </div>
 
             </div>

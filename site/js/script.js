@@ -21,6 +21,17 @@
 
         $('#adminForm input').trigger('change');
 
+        // Warning discart documment, for rrhh boss
+        $('#tezza_vb_rrhh_no').on('change',function(){
+            var opcion = confirm("¿Estas seguro de desaprobar este documento?");
+            if ( ! opcion ){
+                $(this).prop('checked', false);
+            }
+        });
+
     });
+
+
+
 
 })( jQuery );
