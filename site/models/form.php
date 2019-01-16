@@ -238,11 +238,11 @@ class FrmTezzaModelForm extends JModelForm
         }
 
         // Boss area
-        $id_area = $helper->getUserArea();
+        $id_area = $helper->getUserArea(false); // parameter $once = false, return an array areas
         $is_boss = $helper->getIsBoss($id_area);
         $id_form_area = $form->id_area;
 
-        if ( $id_area != $id_form_area ) return -1;
+        if ( ! in_array($id_form_area, $id_area) ) return -1;
 
         if ( $is_boss ){
             if ( $is_approval && $is_approval_rrhh )

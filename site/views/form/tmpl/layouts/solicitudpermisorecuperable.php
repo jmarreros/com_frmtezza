@@ -51,7 +51,7 @@
         </section>
         <section id="tituloformulario" class="block">
             <div>
-                <h3>Solicitud de Permiso No Recuperado</h3>
+                <h3>Solicitud de Permiso por Recuperar</h3>
             </div>
             <div class="fecha-creacion">
                 <?php

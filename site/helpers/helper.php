@@ -26,26 +26,39 @@ class FrmTezzaHelper
      *
 	 * @return  bool  true if is boss from an specific area
 	 */
-    public function getIsBoss( $id_area ){
+    public function getIsBoss( $id_areas ){
         $user = JFactory::getUser();
         $user_id = $user->id;
         $is_boss = false;
+        $arr_id_area = array();
 
 
         // Get boss group like '%jefe%'
         $area = new FrmTezzaModelAreas();
-        $id_area_boss = $area->get_boss_group();
+        $id_area_boss = $area->get_boss_group(); //Get boss group id
 
         if ( ! $id_area_boss ) return false;
 
-        //Get all bosses from an specif area
-        $result = $area->get_user_by_groups($id_area_boss, $id_area);
+        // Validate is array areas
+        if ( ! is_array($id_areas) ){
+            $arr_id_area[] = $id_areas;
+        } else {
+            $arr_id_area = $id_areas;
+        }
 
-        foreach ($result as $area){
-            if ( $area->id == $user_id ){
-                $is_boss = true;
-                break;
+        foreach ($arr_id_area as $id_area) {
+            
+            //Get all bosses from an specif area
+            $result = $area->get_user_by_groups($id_area_boss, $id_area);
+
+            foreach ($result as $area){
+                if ( $area->id == $user_id ){
+                    $is_boss = true;
+                    break;
+                }
             }
+
+            if ($is_boss) break;
         }
 
         return $is_boss;
@@ -105,10 +118,11 @@ class FrmTezzaHelper
     /**
 	 * Get user area, filters only the "first" area found of the current user
      *
+     * @param bol once return only one area by default
      *
 	 * @return  int  User area
 	 */
-    public function getUserArea(){
+    public function getUserArea( $once = true ){
 
         $db = JFactory::getDbo();
         $query = $db->getQuery(true);
@@ -118,11 +132,14 @@ class FrmTezzaHelper
 
         $query->select('group_id')
             ->from($db->quoteName('#__frmtezza_v_user_area'))
-            ->where($db->quoteName('user_id') . ' = '.$user->id)
-            ->setLimit(1);
+            ->where($db->quoteName('user_id') . ' = '.$user->id);
         $db->setQuery($query);
 
-        $area =  $db->loadResult();
+        if ( $once ){
+            $area =  $db->loadResult();            
+        } else {
+            $area = $db->loadColumn();
+        }
 
         return $area;
     }

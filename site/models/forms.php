@@ -51,11 +51,12 @@ class FrmTezzaModelForms extends JModelList
 		// if not is boss rrhh filter data
 		if ( ! $is_rrhh_boss ){
 
-			$user_area = $helper->getUserArea();
+			$user_area = $helper->getUserArea(false); //parameter $once = false , array of user_area
 			$is_boss = $helper->getIsBoss($user_area);
 
-			if ( $is_boss ){ //all data from an specific area
-				$query->where($db->quoteName('id_area')."=".$user_area);
+			if ( $is_boss ){ //all data from one or more areas
+				$query->where($db->quoteName('id_area')." in (". implode(",", $user_area ). ")");
+
 			} else { //all data of the current user
 				$query->where($db->quoteName('id_user')."=".$user->id);
 			}
