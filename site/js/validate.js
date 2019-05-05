@@ -59,10 +59,10 @@
 
             $('[name="ff_nm_enviar[]"]').on('click',function(){
                 if (
-                    validate_time(horainicio0) && validate_time(horafin0) &&
-                    validate_time(rhorainicio0) && validate_time(rhorafin0) &&
-                    validate_time(rhorainicio1) && validate_time(rhorafin1) &&
-                    validate_time(rhorainicio2) && validate_time(rhorafin2)
+                    validate_time24(horainicio0) && validate_time24(horafin0) &&
+                    validate_time24(rhorainicio0) && validate_time24(rhorafin0) &&
+                    validate_time24(rhorainicio1) && validate_time24(rhorafin1) &&
+                    validate_time24(rhorainicio2) && validate_time24(rhorafin2)
                     ){
 
                     var dif0 = difference_time(horainicio0.val(), horafin0.val());
@@ -75,10 +75,16 @@
                     rtotal1.val(parseInt(rdif1) > 0 ? rdif1 : '');
                     rtotal2.val(parseInt(rdif2) > 0 ? rdif2 : '');
 
-                    ff_validate_submit(this,'click');
+
+                    if ( parseInt(dif0) >= 0 && parseInt(rdif0) >= 0 && parseInt(rdif1)>=0 && parseInt(rdif2)>=0 ){
+                        ff_validate_submit(this,'click');
+                    }
+                    else {
+                        alert ( 'Error diferencia de horas ');
+                    }
             }
                 else {
-                    alert ( 'Error en el formato de hora ingresado ');
+                    alert ( 'Error en el formato de hora ingresado, debe ser formato 00:00 (24 horas)');
                 }
 
             });
@@ -101,29 +107,62 @@
     }
 
     // función para validad que el dato ingresado sea un formato de hora tipo: hh:mm (am|pm)
-    function validate_time(input){
+    // function validate_time(input){
+    //     if ( input.val() == '' ) return true;
+
+    //     var inputvalidate = input.val().match(/^(0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/);
+    //     if (!inputvalidate){
+    //         input.css('background', '#fdd');
+    //     } else {
+    //         input.css('background', 'transparent');
+    //     }
+    //     return inputvalidate;
+    // }
+
+    function validate_time24(input){
         if ( input.val() == '' ) return true;
 
-        var inputvalidate = input.val().match(/^(0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/);
+
+        if (input.val().toLowerCase().includes("am") || input.val().toLowerCase().includes("pm")) return false;
+
+        // Autocomplete 0 before
+        var completeTime = input.val().split(':');
+        if (completeTime.length != 2) return false;
+
+        if ( parseInt(completeTime[0]) <= 9 ) completeTime[0] = '0' + parseInt(completeTime[0]);
+        if ( parseInt(completeTime[1]) <= 9 ) completeTime[1] = '0' + parseInt(completeTime[1]);
+
+        completeTime = completeTime[0] + ':' + completeTime[1];
+
+        var inputvalidate = completeTime.match(/^$|^(([01][0-9])|(2[0-3])):[0-5][0-9]$/);
         if (!inputvalidate){
             input.css('background', '#fdd');
         } else {
             input.css('background', 'transparent');
         }
+
+        input.val(completeTime);
         return inputvalidate;
     }
 
     // función para retornar la diferencia de tiempo
     function difference_time( time_inicio, time_fin ){
         var cad = '';
-        var timeStart = new Date("01/01/2000 " + time_inicio);
-        var timeEnd = new Date("01/01/2000 " + time_fin);
+
+        hInicio = parseInt(time_inicio);
+        hFin = parseInt(time_fin);
+
+        if (hInicio > hFin){
+            var timeStart = new Date("01/01/2000 " + time_inicio);
+            var timeEnd = new Date("01/02/2000 " + time_fin);
+        } else {
+            var timeStart = new Date("01/01/2000 " + time_inicio);
+            var timeEnd = new Date("01/01/2000 " + time_fin);
+        }
 
         var diff = (timeEnd - timeStart) / 60000;
         var minutes = diff % 60;
         var hours = (diff - minutes) / 60;
-
-        // if ( diff < 0 ) return false;
 
         cad = hours + ' h';
         cad += (minutes) ? ' - ' + minutes + ' m' : '';
@@ -132,51 +171,29 @@
     }
 
 
+    // function timeConvertor(time) {
+    //     return time;
+
+    //     var part = time.split(':');
+
+    //     if ( part.length != 2 ) return '';
+
+    //     var hour = part[0];
+    //     var min = part[1].toLowerCase();
+    //     var meridiane = min.substr(min.length-2);
+
+    //     if ( meridiane.match('pm') ) {
+    //         hour = 12 + parseInt(hour,10);
+    //         min = min.replace('pm', '');
+    //     } else {
+    //         min = min.replace('am', '');
+    //     }
+
+    //     return (hour + ':' + min );
+    // }
+
+
+
 })( jQuery );
 
-
-
-
-
-
-
-        // $('#ff_form5').submit(function (evt) {
-        //     evt.preventDefault();
-        //     // alert('prevent subimit');
-        // });
-
-
-        // $('#ff_elem377').on('change', function() {
-        //     // var fecha = new Date($('#ff_elem377').value).toISOString().slice(0,10);
-        //     alert('hola');
-        // });
-
-
-
-
-        // $('#bfSubmitButton').on('click',function(e){
-        //     e.preventDefault();
-        // })
-
-        // $('ff_form5').submit(function(event){
-        //     event.preventDefault();
-        // });
-
-        // $('#ff_form5').on('submit',function(){
-
-
-        // });
-
-        // $('#ff_elem377').on('change', function() {
-        //     // var fecha = new Date($('#ff_elem377').value).toISOString().slice(0,10);
-        //     alert('hola');
-        // });
-
-
-        // Para el formulario de Vacaciones
-        // if (
-        //     $('#ff_elem326').length > 0 &&
-        //     $('#ff_elem569').length > 0 &&
-        //     $('#ff_elem377').length > 0){
-        // }
 

@@ -48,6 +48,11 @@ class FrmTezzaViewForms extends JViewLegacy
 		$helper = new FrmTezzaHelper();
 		$this->is_boss_rrhh = $helper->getIsBossRRHH();
 
+		// Get areas for the user
+		$this->user_area = $helper->getUserArea(false);
+
+		// Get is boss if
+		$this->is_boss = $helper->getIsBoss($this->user_area); // is boss
 
 		// Display the view
 		parent::display($tpl);

@@ -29,9 +29,10 @@
             }
         });
 
+        $('#date_star').prop("readonly", true);
+        $('#date_end').prop("readonly", true);
+
     });
-
-
 
 
 })( jQuery );

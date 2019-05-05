@@ -1,13 +1,69 @@
 .container-filter{
     display: block;
-    background-color:#f9f9f9;
+    /* background-color:#f9f9f9; */
+    background-color:#ececec;
     padding:10px;
-    text-align: right;
 }
 
-.container-filter > .tezza-area,
-.container-filter > .tezza-search{
-    display: inline-block;
+.container-filter input[type="text"],
+.container-filter select{
+    height: 30px!important;
+    padding:2px 6px!important;
+}
+
+.container-filter .row{
+    margin:0;
+    padding-top:10px;
+}
+
+.container-filter .row:last-child{
+    padding-top:20px;
+}
+
+.container-filter .row:last-child > div select,
+.container-filter .row:last-child > div input[type="text"]{
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.container-filter .row:last-child .btn{
+    float: right;
+}
+
+
+.container-filter .row:first-child{
+    border-bottom: 1px dotted #ddd;
+}
+
+.filter-document{
+    margin-bottom: 10px;
+}
+
+.container-pending{
+    padding-bottom: 10px;
+}
+
+.container-date span,
+.container-date .field-calendar{
+    display:inline-block;
+}
+
+.container-date span{
+    margin-right: 5px;
+}
+
+.container-date .btn{
+    padding:4px 7px;
+    margin-right: 5px;
+}
+
+.container-date > div{
+    float: left;
+}
+
+.container-date input{
+    max-width: 130px;
+    background-color:white!important;
 }
 
 .pagination{

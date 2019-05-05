@@ -24,7 +24,7 @@ class FrmTezzaHelper
      *
      * @param int area
      *
-	 * @return  bool  true if is boss from an specific area
+	 * @return  bool  true if is boss from an specific area, user have to belong to an area an be boss
 	 */
     public function getIsBoss( $id_areas ){
         $user = JFactory::getUser();
@@ -32,11 +32,9 @@ class FrmTezzaHelper
         $is_boss = false;
         $arr_id_area = array();
 
-
-        // Get boss group like '%jefe%'
+        // Get boss group like '%jefe%' , validation
         $area = new FrmTezzaModelAreas();
         $id_area_boss = $area->get_boss_group(); //Get boss group id
-
         if ( ! $id_area_boss ) return false;
 
         // Validate is array areas
@@ -47,14 +45,13 @@ class FrmTezzaHelper
         }
 
         foreach ($arr_id_area as $id_area) {
-            
             //Get all bosses from an specif area
             $result = $area->get_user_by_groups($id_area_boss, $id_area);
 
             foreach ($result as $area){
                 if ( $area->id == $user_id ){
                     $is_boss = true;
-                    break;
+                    break; // No neccesary to validate all areas because of the structure of groups in joomla
                 }
             }
 
@@ -63,6 +60,7 @@ class FrmTezzaHelper
 
         return $is_boss;
     }
+
 
     /**
 	 * Validate if the current user is a boss from RRHH area
@@ -136,13 +134,14 @@ class FrmTezzaHelper
         $db->setQuery($query);
 
         if ( $once ){
-            $area =  $db->loadResult();            
+            $area =  $db->loadResult();
         } else {
             $area = $db->loadColumn();
         }
 
         return $area;
     }
+
 
     /**
 	 * Get user data, additional custom fields, test for BF

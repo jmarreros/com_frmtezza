@@ -129,14 +129,14 @@
         <div class="block">
             <div class="controls form-inline">
                 <label class="control-label">Hora inicio</label>
-                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horainicio0']); ?>" >
+                <input readonly="readonly" type="text" value="<?= $this->dataBF['horainicio0']; ?>" >
             </div>
         </div>
 
         <div class="block">
             <div class="controls form-inline">
                 <label class="control-label">Hora fin</label>
-                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horafin0']); ?>" >
+                <input readonly="readonly" type="text" value="<?= $this->dataBF['horafin0']; ?>" >
             </div>
         </div>
 
@@ -165,14 +165,14 @@
         <div class="block">
             <div class="controls form-inline">
                 <label class="control-label">Hora inicio</label>
-                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horainiciorecuperacion0']); ?>" >
+                <input readonly="readonly" type="text" value="<?= $this->dataBF['horainiciorecuperacion0']; ?>" >
             </div>
         </div>
 
         <div class="block">
             <div class="controls form-inline">
                 <label class="control-label">Hora fin</label>
-                <input readonly="readonly" type="text" value="<?= $helper->time_format($this->dataBF['horafinrecuperacion0']); ?>" >
+                <input readonly="readonly" type="text" value="<?= $this->dataBF['horafinrecuperacion0']; ?>" >
             </div>
         </div>
 
@@ -204,7 +204,7 @@
                 <?php
                     $val = '';
                     if (isset($this->dataBF['horainiciorecuperacion1'])){
-                        $val = $helper->time_format($this->dataBF['horainiciorecuperacion1']);
+                        $val = $this->dataBF['horainiciorecuperacion1'];
                     }
                 ?>
                 <input readonly="readonly" type="text" value="<?= $val; ?>" >
@@ -216,7 +216,7 @@
                 <?php
                     $val = '';
                     if (isset($this->dataBF['horafinrecuperacion1'])){
-                        $val = $helper->time_format($this->dataBF['horafinrecuperacion1']);
+                        $val = $this->dataBF['horafinrecuperacion1'];
                     }
                 ?>
                 <input readonly="readonly" type="text" value="<?= $val; ?>" >
@@ -255,7 +255,7 @@
                 <?php
                     $val = '';
                     if (isset($this->dataBF['horainiciorecuperacion2'])){
-                        $val = $helper->time_format($this->dataBF['horainiciorecuperacion2']);
+                        $val = $this->dataBF['horainiciorecuperacion2'];
                     }
                 ?>
                 <input readonly="readonly" type="text" value="<?= $val; ?>" >
@@ -267,7 +267,7 @@
                 <?php
                     $val = '';
                     if (isset($this->dataBF['horafinrecuperacion2'])){
-                        $val = $helper->time_format($this->dataBF['horafinrecuperacion2']);
+                        $val = $this->dataBF['horafinrecuperacion2'];
                     }
                 ?>
                 <input readonly="readonly" type="text" value="<?= $val; ?>" >
