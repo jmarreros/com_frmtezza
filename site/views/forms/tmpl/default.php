@@ -20,35 +20,45 @@ $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 $document->addScript('components/'.$jinput->get('option').'/js/script.js');
 
 // var_dump($this->userData);
-print_r($this->user_area);
-var_dump($this->is_boss);
+// print_r($this->user_area);
+// var_dump($this->is_boss);
 
-function field_pending( $is_boss_rrhh ){
+function field_pending( $is_boss_rrhh, $pending ){
 	$name_class="approve";
 	$text = "Mostrar sólo pendientes aprobación";
-	$checked = "";
+	$checked = $pending?'checked':'';
 
  	if ( $is_boss_rrhh ){
 		$name_class="rrhh";
 		$text = "Mostrar sólo pendientes aprobación RRHH";
-		$$checked = "checked";
 	}
 
 	return "<div class='container-pending'>
-				<input id=\"pending-$name_class\" type='checkbox' $checked />
+				<input id=\"pending-$name_class\" name=\"pending_$name_class\" type='checkbox' $checked />
 				<label for=\"pending-$name_class\" >$text</label>
 			</div>";
 }
 
-function field_document_type(){
-	return "<select class='filter-document' id='filter-document' name='filter_document'>
-			<option value='0'>Todos los documentos</option>
-			<option value='solicitudcambioturno'>Cambio de turno</option>
-			<option value='solicituddescansovacacional'>Descanzo vacacional</option>
-			<option value='solicitudhorasextra'>Horas extra</option>
-			<option value='solicitudpermisonorecuperable'>Permiso No recuperable</option>
-			<option value='solicitudpermisorecuperable'>Permiso recuperable</option>
-		</select>";
+function field_document_type($filter_document){
+	$documents = [
+		'solicitudcambioturno' => 'Cambio de turno',
+		'solicituddescansovacacional' => 'Descanzo vacacional',
+		'solicitudhorasextra' => 'Horas extra',
+		'solicitudpermisonorecuperable' => 'Permiso No recuperable',
+		'solicitudpermisorecuperable' => 'Permiso recuperable',
+	];
+	$cad = "<select class='filter-document' id='filter-document' name='filter_document'>";
+	$cad .= "<option $filter_document ? selected : '' value=''>Todos los documentos</option>";
+	$cad .= "</select>";
+	return $cad;
+	// $this-> == $area->id?"selected":""
+// "			<option value=''>Todos los documentos</option>
+// 			<option value='solicitudcambioturno'>Cambio de turno</option>
+// 			<option value='solicituddescansovacacional'>Descanzo vacacional</option>
+// 			<option value='solicitudhorasextra'>Horas extra</option>
+// 			<option value='solicitudpermisonorecuperable'>Permiso No recuperable</option>
+// 			<option value='solicitudpermisorecuperable'>Permiso recuperable</option>
+// 		</select>";
 }
 ?>
 
@@ -60,9 +70,9 @@ function field_document_type(){
 			<div class="col-sm-5 col-md-5">
 				<?php
 					if ($this->is_boss_rrhh || $this->is_boss){
-						echo field_pending($this->is_boss_rrhh);
+						echo field_pending($this->is_boss_rrhh, $this->pending_rrhh);
 					} else {
-						echo field_document_type();
+						echo field_document_type($this->filter_document);
 					}
 				?>
 			</div>
@@ -70,11 +80,19 @@ function field_document_type(){
 				<div class = "container-date">
 					<div>
 						<span>Desde: </span>
-						<?php echo JHTML::_('calendar', '', 'date_star', 'date_star','%d/%m/%Y', array('placeholder'=>'dd/mm/yyyy')); ?>
+						<?php
+						$date_star = '';
+						if ( $this->date_star ) $date_star = DateTime::createFromFormat('d/m/Y', $this->date_star)->format('m/d/Y');
+						echo JHTML::_('calendar', $date_star, 'date_star', 'date_star','%d/%m/%Y', array('placeholder'=>'dd/mm/yyyy'));
+						?>
 					</div>
 					<div>
 						<span>Hasta: </span>
-						<?php echo JHTML::_('calendar', '', 'date_end', 'date_end','%d/%m/%Y', array('placeholder'=>'dd/mm/yyyy')); ?>
+						<?php
+						$date_end = '';
+						if ( $this->date_end ) $date_end = DateTime::createFromFormat('d/m/Y', $this->date_end)->format('m/d/Y');
+						echo JHTML::_('calendar', $date_end, 'date_end', 'date_end','%d/%m/%Y', array('placeholder'=>'dd/mm/yyyy'));
+						?>
 					</div>
 				</div>
 			</div>
@@ -87,7 +105,7 @@ function field_document_type(){
 			?>
 			<div class="<?= "col-sm-$x col-md-$x"?>">
 				<?php if ( $this->is_boss_rrhh || $this->is_boss ): ?>
-					<input type="text" maxlength="80" id="indicio-nombre" name="indicio_nombre" placeholder="Indicio nombre" />
+					<input type="text" maxlength="80" id="indicio-nombre" value="<?= $this->indicio_nombre?$this->indicio_nombre:''; ?>" name="indicio_nombre" placeholder="Indicio nombre" />
 				<?php else: ?>
 					<?= field_pending($this->is_boss_rrhh); ?>
 				<?php endif; ?>
@@ -95,7 +113,7 @@ function field_document_type(){
 
 			<?php if ( $this->is_boss_rrhh || $this->is_boss ): ?>
 				<div class="col-sm-3 col-md-3">
-					<?= field_document_type(); ?>
+					<?= field_document_type($this->filter_document); ?>
 				</div>
 			<?php endif; ?>
 
@@ -128,27 +146,6 @@ function field_document_type(){
 
 		</div>
 
-
-
-
-		<?php if (false && $this->is_boss_rrhh ): ?>
-			<!-- Filter all area -->
-			<select class="filter-area" id="filter-area" name="filter_area">
-				<option value="0" <?php echo !$this->tezza_area?"selected":"" ?> >- Todas las Áreas -</option>
-				<?php
-					if ( !empty($this->areas) ) :
-						foreach ($this->areas as $i => $area) :
-							echo "<option value='".$area->id."' ";
-							echo $this->tezza_area == $area->id?"selected":"";
-							echo " >";
-							echo $area->title;
-							echo "</option>";
-						endforeach;
-					endif;
-				?>
-			</select>
-
-		<?php endif; ?>
 	</div>
 	<hr>
 

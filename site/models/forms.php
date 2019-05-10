@@ -28,10 +28,21 @@ class FrmTezzaModelForms extends JModelList
 	protected function getListQuery()
 	{
 		$user = JFactory::getUser();
-		$mainframe =JFactory::getApplication();
 
-		//filters
-		$area = $mainframe->getUserStateFromRequest( "tezza_area", 'tezza_area', '' );
+		// Filters
+		$jinput = JFactory::getApplication()->input;
+
+		$pending_rrhh = $jinput->get( "pending_rrhh", false, 'BOOL');
+		$date_star = $jinput->get( "date_star", '', 'STRING');
+		$date_end = $jinput->get( "date_end", '', 'STRING');
+		$indicio_nombre = trim($jinput->get( "indicio_nombre", '', 'STRING'));
+		$filter_document = $jinput->get( "filter_document", '', 'STRING');
+
+		$area= '';
+
+		error_log (print_r($date_star,true), 3, 'error_log.txt');
+		// error_log (print_r($date_end,true), 3, 'error_log.txt');
+
 
 		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true);
@@ -40,9 +51,9 @@ class FrmTezzaModelForms extends JModelList
 				->from($db->quoteName('#__frmtezza_v_user_forms'));
 
 		//Filter area
-		if ( $area ){
-			$query->where($db->quoteName('id_area')."=".$area);
-		}
+		// if ( $area ){
+		// 	$query->where($db->quoteName('id_area')."=".$area);
+		// }
 
 		// -- Validate user --
 		$helper = new FrmTezzaHelper();
@@ -70,3 +81,20 @@ class FrmTezzaModelForms extends JModelList
 
 
 }
+
+
+// $mainframe =JFactory::getApplication();
+// $area = $mainframe->getUserStateFromRequest( "tezza_area", 'tezza_area', '' );
+
+
+		//filters
+		// $area='';
+		// $filter_document = $mainframe->getUserStateFromRequest( "filter_document", 'filter_document', '' );
+		// $check = filter_var($filter_document, FILTER_VALIDATE_BOOLEAN);
+		// $pending_approve = $mainframe->getUserStateFromRequest( "pending_approve", 'pending_approve', '' );
+
+		// error_log (print_r($pending_rrhh,true), 3, 'error_log.txt');
+		// error_log('--',3, 'error_log');
+		// error_log(print_r($filter_document,true), 3, 'error_log');
+		// error_log($pending_rrhh);
+		// print_r($pending_approve,true);

@@ -35,8 +35,25 @@ class FrmTezzaViewForms extends JViewLegacy
 			$application->enqueueMessage('Tienes que estar conectado para ver esta pantalla <a href="'.JURI::base().'">Conectarse</a>','Error');
 		}
 
-		$mainframe =JFactory::getApplication();
-		$this->tezza_area = $mainframe->getUserStateFromRequest( "tezza_area", 'tezza_area', '' );
+		// Filters
+		$jinput = JFactory::getApplication()->input;
+
+		$this->pending_rrhh = $jinput->get( "pending_rrhh", false, 'BOOL');
+		$this->date_star = $jinput->get( "date_star", '', 'STRING');
+		if ($this->date_star =="0000-00-00 00:00:00") $this->date_star = '';
+		$this->date_end = $jinput->get( "date_end", '', 'STRING');
+		if ($this->date_end =="0000-00-00 00:00:00") $this->date_end = '';
+		$this->indicio_nombre = trim($jinput->get( "indicio_nombre", '', 'STRING'));
+		$this->filter_document = $jinput->get( "filter_document", '', 'STRING');
+
+		$this->tezza_area = '';
+
+
+		// $mainframe =JFactory::getApplication();
+		// $this->tezza_area = $mainframe->getUserStateFromRequest( "tezza_area", 'tezza_area', '' );
+
+
+
 
 		// Get data from the model
 		$this->items		= $this->get('Items');
