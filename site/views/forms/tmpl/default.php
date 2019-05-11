@@ -19,10 +19,7 @@ $document = JFactory::getDocument();
 $document->addStyleSheet('components/'.$jinput->get('option').'/css/style.css');
 $document->addScript('components/'.$jinput->get('option').'/js/script.js');
 
-// var_dump($this->userData);
-// print_r($this->user_area);
-// var_dump($this->is_boss);
-
+// Pending field
 function field_pending( $is_boss_rrhh, $pending ){
 	$name_class="approve";
 	$text = "Mostrar sólo pendientes aprobación";
@@ -39,38 +36,73 @@ function field_pending( $is_boss_rrhh, $pending ){
 			</div>";
 }
 
+// Document field
 function field_document_type($filter_document){
 	$documents = [
+		'' => 'Todos los documentos',
 		'solicitudcambioturno' => 'Cambio de turno',
 		'solicituddescansovacacional' => 'Descanzo vacacional',
 		'solicitudhorasextra' => 'Horas extra',
 		'solicitudpermisonorecuperable' => 'Permiso No recuperable',
 		'solicitudpermisorecuperable' => 'Permiso recuperable',
 	];
+
 	$cad = "<select class='filter-document' id='filter-document' name='filter_document'>";
-	$cad .= "<option $filter_document ? selected : '' value=''>Todos los documentos</option>";
+	foreach($documents as $key => $value){
+		$sel = $filter_document == $key ? 'selected' : '';
+		$cad .= "<option $sel value='$key'>$value</option>";
+	}
 	$cad .= "</select>";
+
 	return $cad;
-	// $this-> == $area->id?"selected":""
-// "			<option value=''>Todos los documentos</option>
-// 			<option value='solicitudcambioturno'>Cambio de turno</option>
-// 			<option value='solicituddescansovacacional'>Descanzo vacacional</option>
-// 			<option value='solicitudhorasextra'>Horas extra</option>
-// 			<option value='solicitudpermisonorecuperable'>Permiso No recuperable</option>
-// 			<option value='solicitudpermisorecuperable'>Permiso recuperable</option>
-// 		</select>";
+}
+
+// Area field
+function field_area($is_boss_rrhh, $is_boss, $user_area, $areas, $filter_area){
+
+	$cad = "<select class='filter-area' id='filter-area' name='filter_area'>";
+	if ( $is_boss_rrhh || ( $is_boss && count($user_area) > 1 ) ){
+		$cad .= "<option value='0' ! $filter_area ? 'selected':'' >- Todas las Áreas -</option>";
+	}
+
+	if ( !empty($areas) ) {
+		foreach($areas as $item){
+			if ( $is_boss_rrhh || ( $is_boss && in_array($item->id, $user_area) ) ){
+				$cad .= "<option value='".$item->id."' ";
+				$cad .= $filter_area == $item->id?"selected":"";
+				$cad .= " >";
+				$cad .= $item->title;
+				$cad .= "</option>";
+			}
+		}
+	}
+	$cad .= '</select>';
+
+	return $cad;
+
+		// if ( !empty($this->areas) ) :
+		// 	foreach ($this->areas as $i => $area) :
+		// 		if ( $this->is_boss_rrhh || ( $this->is_boss && in_array($area->id, $this->user_area) ) ){
+		// 			echo "<option value='".$area->id."' ";
+		// 			echo $this->tezza_area == $area->id?"selected":"";
+		// 			echo " >";
+		// 			echo $area->title;
+		// 			echo "</option>";
+		// 		}
+		// 	endforeach;
+		// endif;
 }
 ?>
 
 <jdoc:include type="message" />
 
 <form action="index.php?option=com_frmtezza&view=forms" method="post" id="adminForm" name="adminForm">
-	<div class="container-filter">
+	<div class="container-filter" <?= !$this->user_id?"style='display:none;'":''; ?> >
 		<div class="row">
 			<div class="col-sm-5 col-md-5">
 				<?php
 					if ($this->is_boss_rrhh || $this->is_boss){
-						echo field_pending($this->is_boss_rrhh, $this->pending_rrhh);
+						echo field_pending($this->is_boss_rrhh, $this->pending_rrhh || $this->pending_approve);
 					} else {
 						echo field_document_type($this->filter_document);
 					}
@@ -106,8 +138,8 @@ function field_document_type($filter_document){
 			<div class="<?= "col-sm-$x col-md-$x"?>">
 				<?php if ( $this->is_boss_rrhh || $this->is_boss ): ?>
 					<input type="text" maxlength="80" id="indicio-nombre" value="<?= $this->indicio_nombre?$this->indicio_nombre:''; ?>" name="indicio_nombre" placeholder="Indicio nombre" />
-				<?php else: ?>
-					<?= field_pending($this->is_boss_rrhh); ?>
+				<?php else: //not boss?>
+					<?= field_pending($this->is_boss_rrhh, $this->pending_approve); ?>
 				<?php endif; ?>
 			</div>
 
@@ -119,29 +151,13 @@ function field_document_type($filter_document){
 
 			<?php if ( $this->is_boss_rrhh || $this->is_boss ): ?>
 				<div class="col-sm-3 col-md-3">
-					<select class="filter-area" id="filter-area" name="filter_area" >
-						<?php if ( $this->is_boss_rrhh || ( $this->is_boss && count($this->user_area) > 1 ) ): ?>
-							<option value="0" <?php echo !$this->tezza_area?"selected":"" ?> >- Todas las Áreas -</option>
-						<?php endif; ?>
-						<?php
-							if ( !empty($this->areas) ) :
-								foreach ($this->areas as $i => $area) :
-									if ( $this->is_boss_rrhh || ( $this->is_boss && in_array($area->id, $this->user_area) ) ){
-										echo "<option value='".$area->id."' ";
-										echo $this->tezza_area == $area->id?"selected":"";
-										echo " >";
-										echo $area->title;
-										echo "</option>";
-									}
-								endforeach;
-							endif;
-						?>
-					</select>
+					<?= field_area($this->is_boss_rrhh, $this->is_boss, $this->user_area, $this->areas, $this->filter_area) ?>
 				</div>
 			<?php endif; ?>
 
 			<div class="col-sm-3 col-md-3">
 				<button class="btn btn-primary" type="submit" id="frm-filter">Filtrar</button>
+				<a href="#" id="clear-filter">Limpiar</a>
 			</div>
 
 		</div>

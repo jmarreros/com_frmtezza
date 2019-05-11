@@ -28,35 +28,41 @@ class FrmTezzaModelForms extends JModelList
 	protected function getListQuery()
 	{
 		$user = JFactory::getUser();
+		$helper = new FrmTezzaHelper();
 
 		// Filters
 		$jinput = JFactory::getApplication()->input;
-
 		$pending_rrhh = $jinput->get( "pending_rrhh", false, 'BOOL');
+		$pending_approve = $jinput->get( "pending_approve", false, 'BOOL');
 		$date_star = $jinput->get( "date_star", '', 'STRING');
 		$date_end = $jinput->get( "date_end", '', 'STRING');
 		$indicio_nombre = trim($jinput->get( "indicio_nombre", '', 'STRING'));
 		$filter_document = $jinput->get( "filter_document", '', 'STRING');
+		$filter_area = $jinput->get( "filter_area",0,'INT');
 
-		$area= '';
+		// Validation filters
+		$app = JFactory::getApplication();
+		if ( $date_star && $date_end ) {
 
-		error_log (print_r($date_star,true), 3, 'error_log.txt');
-		// error_log (print_r($date_end,true), 3, 'error_log.txt');
+			$date_star = $helper->dateDBFormat($date_star);
+			if ( ! $date_star ) $app->enqueueMessage('Fecha de inicio no válida','Error');
 
+			$date_end = $helper->dateDBFormat($date_end);
+			if ( ! $date_end ) $app->enqueueMessage('Fecha final no válida','Error');
 
+			if ( strtotime($date_star) > strtotime($date_end) ){
+				$app->enqueueMessage('La fecha final debe ser mayor que la fecha de inicio','Error');
+			}
+		}
+
+		// BD
 		$db    = JFactory::getDbo();
 		$query = $db->getQuery(true);
 
 		$query->select('*')
 				->from($db->quoteName('#__frmtezza_v_user_forms'));
 
-		//Filter area
-		// if ( $area ){
-		// 	$query->where($db->quoteName('id_area')."=".$area);
-		// }
 
-		// -- Validate user --
-		$helper = new FrmTezzaHelper();
 		$is_rrhh_boss = $helper->getIsBossRRHH(); // Verify isbooss rrhh
 
 		// if not is boss rrhh filter data
@@ -71,7 +77,27 @@ class FrmTezzaModelForms extends JModelList
 			} else { //all data of the current user
 				$query->where($db->quoteName('id_user')."=".$user->id);
 			}
+		}
 
+
+		// Filters
+		if ( $date_star && $date_end ){
+			$query->where($db->quoteName('dt_register')." BETWEEN '$date_star' AND DATE_ADD('$date_end', INTERVAL 1 DAY)");
+		}
+		if ($filter_area){
+			$query->where($db->quoteName('id_area')."=$filter_area");
+		}
+		if ( $filter_document ){
+			$query->where($db->quoteName('frmname')."='$filter_document'");
+		}
+		if ( $pending_rrhh ) {
+			$query->where($db->quoteName('approval_rrhh')." is NULL");
+		}
+		if ( $pending_approve ){
+			$query->where($db->quoteName('approval')." is NULL");
+		}
+		if ( $indicio_nombre ){
+			$query->where($db->quoteName('name')." LIKE '%$indicio_nombre%'");
 		}
 
 		$query->order('dt_register DESC');

@@ -65,6 +65,13 @@
     background-color:white!important;
 }
 
+#clear-filter{
+    display: block;
+    float:right;
+    margin-right: 10px;
+    margin-top:10px;
+}
+
 .pagination{
     width: 100%;
 }

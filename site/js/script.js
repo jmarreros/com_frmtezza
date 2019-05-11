@@ -33,8 +33,25 @@
         $('#date_end').prop("readonly", true);
 
         $('#frm-filter').click(function(e){
-            // e.preventDefault();
+            // validate dates
+            if ( ( $('#date_star').val() && ! $('#date_end').val() ) ||
+                 ( ! $('#date_star').val() && $('#date_end').val() ) ){
+                e.preventDefault();
+                alert('Tienes que completar ambas fechas');
+            }
+        });
 
+        $('#clear-filter').click(function(e){
+            e.preventDefault();
+            $('#pending-approve').prop("checked", false);
+            $('#pending-rrhh').prop("checked", false);
+            $('#date_star').val('');
+            $('#date_star').attr('data-alt-value','');
+            $('#date_end').val('');
+            $('#date_end').attr('data-alt-value','');
+            $('#indicio-nombre').val('');
+            $('#filter-document').val('');
+            $('#filter-area').val('0');
         });
 
     });

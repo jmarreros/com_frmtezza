@@ -37,25 +37,18 @@ class FrmTezzaViewForms extends JViewLegacy
 
 		// Filters
 		$jinput = JFactory::getApplication()->input;
-
 		$this->pending_rrhh = $jinput->get( "pending_rrhh", false, 'BOOL');
+		$this->pending_approve = $jinput->get( "pending_approve", false, 'BOOL');
 		$this->date_star = $jinput->get( "date_star", '', 'STRING');
 		if ($this->date_star =="0000-00-00 00:00:00") $this->date_star = '';
 		$this->date_end = $jinput->get( "date_end", '', 'STRING');
 		if ($this->date_end =="0000-00-00 00:00:00") $this->date_end = '';
 		$this->indicio_nombre = trim($jinput->get( "indicio_nombre", '', 'STRING'));
 		$this->filter_document = $jinput->get( "filter_document", '', 'STRING');
-
-		$this->tezza_area = '';
-
-
-		// $mainframe =JFactory::getApplication();
-		// $this->tezza_area = $mainframe->getUserStateFromRequest( "tezza_area", 'tezza_area', '' );
-
-
-
+		$this->filter_area = $jinput->get( "filter_area",0,'INT');
 
 		// Get data from the model
+		$this->user_id = $user->id;
 		$this->items		= $this->get('Items');
 		$this->pagination	= $this->get('Pagination');
 
@@ -76,19 +69,3 @@ class FrmTezzaViewForms extends JViewLegacy
 	}
 
 }
-
-
-
-// tmp
-// $this->userData = $helper->getUserData();
-
-
-// public function __construct() {
-// 	parent::__construct();
-
-// 	$this->addModelPath(JPATH_COMPONENT_ADMINISTRATOR.'/models');
-
-// 	$view = &$this->getView('Forms', 'html');
-// 	$view->setModel($this->getModel('Areas'));
-// 	$view->display();
-// }

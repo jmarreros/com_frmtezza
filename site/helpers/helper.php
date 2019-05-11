@@ -202,4 +202,11 @@ class FrmTezzaHelper
         $db = JFactory::getDbo();
         return $db->replacePrefix((string) $query);
     }
+
+    // to mysql date
+    public function dateDBFormat($str_date){
+        $items = explode('/', $str_date);
+        if ( count($items) != 3 ) return false;
+        return $items[2].'-'.$items[1].'-'.$items[0];
+    }
 }
